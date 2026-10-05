@@ -1,0 +1,108 @@
+#supplierFormPill {
+    border: 1px solid rgba(96, 165, 250, 0.8);
+    box-shadow: 1px 1px 1px rgba(96, 165, 250, 0.7), -1px -1px 1px rgba(96, 165, 250, 0.7);
+    border-radius: 5px;
+}
+
+#supplierTablePill {
+    border: 1px solid rgba(96, 165, 250, 0.8);
+    box-shadow: 1px 1px 1px rgba(96, 165, 250, 0.7), -1px -1px 1px rgba(96, 165, 250, 0.7);
+    border-radius: 5px;
+}
+
+#supplierFormPill.active {
+    /* background: linear-gradient(to right, rgb(234, 201, 255), rgb(180, 201, 255)); */
+    background-color: rgb(214, 235, 255);
+
+}
+
+#supplierTablePill.active {
+    /* background: linear-gradient(to right, rgb(236, 208, 253), rgb(180, 201, 255)); */
+    background-color: rgb(214, 235, 255);
+}
+
+#supplierFormPill:hover {
+    background-color: rgb(214, 235, 255);
+}
+
+#supplierTablePill:hover {
+    background-color: rgb(214, 235, 255);
+}
+
+#columnBankDetails {
+    border-radius: 5px;
+    height: 37px;
+    background-color: rgba(255, 255, 255, 0.6);
+
+}
+
+#btnaddBankDetails {
+    color: rgb(44, 82, 130);
+    border-radius: 5px;
+    height: 37px;
+    background-color: rgba(255, 255, 255, 0.6);
+    width: 460px;
+    margin-left: 10px;
+    margin-right: 16px;
+
+}
+
+.book-transfer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.book-transfer-container button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+#btnAddNewBook{
+    width: 150px;
+    height: 37px;
+     background-color: rgb(44, 82, 130);
+    color: white;
+
+}
+.select-category-area{
+    background-color: rgb(44, 82, 130);
+    color: white;
+
+}
+
+.select-category-area option{
+    background-color: rgb(44, 82, 130);
+    color: white;
+
+}
+
+.book-transfer-container button:hover {
+
+    background-color: rgb(44, 82, 130);
+    color: white;
+
+}
+
+.list-box {
+    width: 650px;
+    height: 500px;
+    background-color: rgba(44, 82, 130, 0.2);
+    padding: 5px;
+    padding-top: 7px;
+    color:rgb(44, 82, 130); ;
+}
+.list-box option{
+    font-size: medium;
+    margin-left: 5px;
+    margin-bottom: 4px;
+    padding: 3px;
+    padding-left: 10px;
+    border-radius: 1px;
+}

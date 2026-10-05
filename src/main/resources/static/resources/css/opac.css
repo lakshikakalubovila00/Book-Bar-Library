@@ -1,0 +1,16 @@
+#btnSearch{
+    width: 50px;
+    background-color: rgb(30, 58, 95);
+}
+.select-area{
+    border: 2px solid rgb(30, 58, 95);
+    color:rgb(30, 58, 95) ;
+}
+.about-text {
+    flex: 1;
+}
+.about-text p {
+    margin-bottom: 20px;
+    font-style: italic;
+    font-size: medium;
+}

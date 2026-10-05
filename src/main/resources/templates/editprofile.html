@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{headerfragment::headFragment}"></head>
+<head>
+    <!-- link donator css -->
+<!--    <link rel="stylesheet" href="/resources/css/editprofile.css">-->
+</head>
+
+<body>
+<div class="container-fluid">
+    <!-- link side bar -->
+    <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+    <!-- title area -->
+    <div class="row mt-2 title-row">
+        <div class="div-title p-1 text-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <img class="icon-img me-2" src="/resources/images/editprofile.png" alt="">
+                <h3 class="fw-bold main-text">Edit Profile</h3>
+            </div>
+        </div>
+    </div>
+        <div class="row m-2">
+            <div class="col-2"></div>
+            <div class="col-8 mt-2 p-2 editprofile-card">
+                <table class="table table-hover" id="">
+                                <tr>
+                                    <th class="fw-bold me-2 ms-2 normal-text">User Photo</th>
+                                    <td class="me-2 ms-2" colspan="2">
+                                        <img src="/resources/images/empphotodefault.png" id="imgUserPhoto" class="me-2" style="width: 50px; height: 50px; border-radius:5px ;">
+                                        <button type="button" class="btn fw-bold btn-photo-select me-2" onclick="fileUserPhoto.click()">Select</button>
+                                        <button type="button" class="btn fw-bold btn-photo-clear" onclick="clearFile()">Clear</button>
+                                        <input type="file" id="fileUserPhoto"
+                                               class="form-control input-area" style="display:none"
+                                               onchange="validateFile(this,changeUser,'userphoto', imgUserPhoto)">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="fw-bold me-2 ms-2 normal-text">User Name</th>
+                                    <td class="me-2 ms-2">
+                                        <input id="textUserName" class="form-control" disabled type="text" placeholder="User Name" onkeyup="textElementValidator(this,'^([A-Za-z0-9\\#]{5,20})$','changeUser','username')">
+                                    </td>
+                                    <td class="me-2 ms-2">
+                                        <button type="button" class="btn fw-bold edit-button" onclick="textUserName.disabled='';" >Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="fw-bold me-2 ms-2 normal-text">Password</th>
+                                    <td class="me-2 ms-2">
+                                        <input id="textPassword" class="form-control" disabled type="password" placeholder="User Password" onkeyup="textElementValidator(this,'^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$','changeUser','newpassword')">
+                                        <input id="textReTypePassword" class="form-control mt-2" disabled type="password" placeholder="Re-type Password" onkeyup="retypePassword()">
+                                    </td>
+                                    <td class="me-2 ms-2">
+                                        <button type="button" class="btn fw-bold edit-button" onclick="textPassword.disabled='';textReTypePassword.disabled='' " >Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="fw-bold me-2 ms-2 normal-text">Email</th>
+                                    <td class="me-2 ms-2">
+                                        <input id="textEmail" class="form-control" disabled type="text" placeholder="User Email" onkeyup="textElementValidator(
+                                             this,
+                                             '^[A-Za-z0-9\\%\\#]{5,25}[@][a-z]{5,8}[.][a-z]{2,3}$',
+                                             'changeUser',
+                                             'email'
+                                            );" >
+                                    </td>
+                                    <td class="me-2 ms-2">
+                                        <button type="button" class="btn fw-bold edit-button" onclick="textEmail.disabled='';" >Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!--py - padding top and bottom - bootstrap spacing level 3 (16px)-->
+                                    <!--px - padding left and right - bootstrap spacing level 4 (24px)-->
+                                    <td class="text-center py-3" colspan="3">
+                                        <button type="button" class="btn fw-bold edit-button px-4" id="buttonSave" onclick="buttonSaveChanges()">Save Changes</button>
+                                    </td>
+                                </tr>
+                            </table>
+            </div>
+            <div class="col-2"></div>
+        </div>
+</div>
+<div th:replace="~{footerfragment::bottomFragment}"></div>
+<!-- link  js -->
+<script src="/controljs/editprofile.js"></script>
+
+</body>
+
+</html>

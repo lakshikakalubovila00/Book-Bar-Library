@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{headerfragment::headFragment}"></head>
+<head>
+    <!-- link employee css -->
+    <link rel="stylesheet" href="/resources/css/employee.css">
+</head>
+<body>
+<div class="container-fluid">
+    <!-- link side bar -->
+    <!-- ~{sidebar::sidebarFragment} file name :: fragment name    -->
+    <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+    <!-- title area -->
+    <div class="row mt-2 title-row">
+        <div class="div-title p-1 text-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <img class="icon-img me-2" src="/resources/images/report.png" alt="">
+                <h3 class="fw-bold main-text">Book Status Report</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-9">
+            <h5 class="fw-bold normal-text">The following chart illustrates the distribution of books by status.</h5>
+        </div>
+        <div class="col-3">
+            <div class="row">
+                <!--button-->
+                <div class="col text-end">
+                    <button class="btn fw-bold form-btn" id="buttonPrintReport" type="button"
+                            onclick="printReport()">Print Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row m-2">
+        <!-- table -->
+        <div class="col-6">
+            <div class="card m-1">
+                <div class="card-body">
+                    <table id="tableEmployee" class="table table-bordered table-text">
+                        <thead id="tableHeadBookStatus" class="table-head text-center">
+                        <tr>
+                            <th>#</th>
+                            <th >Book Status</th>
+                            <th>Number of Books</th>
+
+                        </tr>
+                        </thead>
+                        <tbody id="tableBodyBookStatus" class="table-body text-center">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- report -->
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Print Preview Modal -->
+<div class="modal fade" id="printModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" id="printArea">
+                <div class="card" id="divCardPrintReport">
+                    <div class="card-header">
+                        <h1 class="text-color">Book Status Report</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-6">
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Book Status</th>
+                                        <th>Number of Books</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="printTableBody">
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-6">
+                                <img id="chartImage" class="img-fluid">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-report-print"
+                        onclick="printModalContent()">
+                    Print
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div th:replace="~{footerfragment::bottomFragment}"></div>
+<!-- link js -->
+<script src="controljs/chart.min.js"></script>
+<script src="controljs/reportbookstatus.js"></script>
+
+</body>
+
+</html>

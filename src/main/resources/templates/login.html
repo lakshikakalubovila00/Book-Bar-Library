@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{headerfragment::headFragment}"></head>
+<head>
+    <!-- link login css -->
+    <link rel="stylesheet" href="resources/css/login.css">
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <!-- main text -->
+    <h1 class="fw-bold text-center main-text">Book Bar Library</h1>
+    <div class="text-center">
+        <span class=" library-slogan">Where You Sip Knowledge in a Bar Full of Books, Not Noise</span>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="card login-form-card">
+            <form action="/login" method="post">
+                <!-- login image -->
+                <div class="row m-1">
+                    <div class="col text-center mt-3">
+                        <i class="fa-solid fa-user login-image" style="color: rgb(30, 58, 95);"></i>
+                    </div>
+                </div>
+                <!-- sub text -->
+                <div class="row m-1">
+                    <h4 class="h3 fw-bold form-name text-center mt-1">EMPLOYEE LOGIN</h4>
+                </div>
+                <!-- user name -->
+                <div class="row m-1">
+                    <div class="col text-center mt-1">
+                        <div class="d-flex justify-content-center">
+                            <div class="input-group input-feild">
+                                <span class="input-group-text span-input">
+                                    <i class="fa-solid fa-user "></i>
+                                </span>
+                                <input type="text" name="username" placeholder="Enter User Name" required
+                                       class="form-control input-text" id="textUsername">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- password -->
+                <div class="row m-1">
+                    <div class="col text-center mt-1">
+                        <div class="d-flex justify-content-center">
+                            <div class="input-group input-feild">
+                                <span class="input-group-text span-input">
+                                    <i class="fa-solid fa-lock "></i>
+                                </span>
+                                <input type="password" name="password" placeholder="Enter Password" required
+                                       class="form-control input-text" id="textPassword">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- valid text -->
+                <div class="row m-1">
+                    <div th:if="${param.error}" class="alert alert-danger">
+                        <h6 class="fw-bold valid-text text-center mt-2">Please Enter Valid User Details.</h6>
+                    </div>
+
+                </div>
+                <!-- login button -->
+                <div class="row m-1">
+                    <div class="col text-center mt-1">
+                        <button class="btn btn-login fw-bold " type="submit">LOGIN</button>
+                    </div>
+                </div>
+                <!-- forgot text -->
+<!--                <div class="row m-1">-->
+<!--                    <h6 class="fw-bold help-text text-center mt-2">Forget Username / Password</h6>-->
+<!--                </div>-->
+            </form>
+        </div>
+    </div>
+
+</div>
+<!-- link jquery -->
+<script src="/resources/script/jQuery v3.7.1.js"></script>
+<!-- link bootstrap js -->
+<Script src="/resources/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></Script>
+<!-- link sweetalert js -->
+<script src="/resources/sweetalert2/package/dist/sweetalert2.all.min.js"></script>
+<!-- link data tables js -->
+<script src="/resources/DataTables/datatables.min.js"></script>
+<!-- link validation function js -->
+<script src="/controljs/validationfunction.js"></script>
+<!-- link common js -->
+<script src="/controljs/common.js"></script>
+<!-- link jquery ui js -->
+<script src="/resources/jquery-ui/jquery-ui.min.js"></script>
+
+
+</body>
+
+</html>

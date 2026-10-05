@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{headerfragment::headFragment}"></head>
+
+<body>
+<div class="container-fluid">
+    <!-- link side bar -->
+    <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+    <!-- title area -->
+    <div class="row mt-2 title-row">
+        <div class="div-title p-1 text-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <img class="icon-img me-2" src="/resources/images/overdueicon.png" alt="">
+                <h3 class="fw-bold main-text">Overdue Borrowings</h3>
+            </div>
+        </div>
+    </div>
+    <!-- table -->
+    <div class="card m-1">
+        <div class="card-body">
+            <table class=" table  table-bordered" id="tableOverdueBorrowings">
+                <thead id="tableHeadOverdueBorrowings" class="table-head text-center">
+                <tr>
+                    <th>#</th>
+                    <th>Borrow Code</th>
+                    <th>Book</th>
+                    <th>Member</th>
+                    <th>Borrow Date</th>
+                    <th>Handover Due Date</th>
+                    <th>Renew Date</th>
+                    <th>Renew Handover Due Date</th>
+                    <th>Status</th>
+                    <th>Modify</th>
+                </tr>
+                </thead>
+                <tbody id="tableBodyOverdueBorrowings" class="table-body text-center">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- title area - marked as overdue -->
+    <div class="row mt-2">
+        <div class=" p-1 text-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <h3 class="fw-bold normal-text">Borrowed Books Marked As Overdue</h3>
+            </div>
+        </div>
+    </div>
+     table
+    <table class=" table  table-bordered" id="tableMarkedAsOverdueBorrowings">
+        <thead id="tableHeadMarkedAsOverdueBorrowings" class="table-head text-center">
+        <tr>
+            <th>#</th>
+            <th>Borrow Code</th>
+            <th>Book</th>
+            <th>Member</th>
+            <th>Borrow Date</th>
+            <th>Handover Due Date</th>
+            <th>Renew Date</th>
+            <th>Renew Handover Due Date</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody id="tableBodyMarkedAsOverdueBorrowings" class="table-body text-center">
+        </tbody>
+    </table>
+</div>
+<div th:replace="~{footerfragment::bottomFragment}"></div>
+<script src="controljs/overdueborrowings.js"></script>
+</body>
+
+</html>

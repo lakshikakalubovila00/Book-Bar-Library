@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{headerfragment::headFragment}"></head>
+<head>
+    <!-- link employee css -->
+    <link rel="stylesheet" href="/resources/css/employee.css">
+</head>
+<body>
+<div class="container-fluid">
+    <!-- link side bar -->
+    <!-- ~{sidebar::sidebarFragment} file name :: fragment name    -->
+    <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+    <!-- title area -->
+    <div class="row mt-2 title-row">
+        <div class="div-title p-1 text-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <img class="icon-img me-2" src="/resources/images/report.png" alt="">
+                <h3 class="fw-bold main-text">Book Purchase Report</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-9">
+            <div class="row">
+                <!--book-->
+                <div class="col-3">
+                    <select id="selectBook"
+                            class="form-select input-area" data-bs-toggle="tooltip"
+                            data-bs-placement="bottom" data-bs-title="Select Calling Name">
+                        <option></option>
+                    </select>
+                </div>
+                <!--start date-->
+                <div class="col-3">
+                    <input type="date" id="dateStartDate" name="sdate"
+                           class="form-control input-area"
+                           required data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           data-bs-title="Select Start Date">
+                </div>
+                <!--end date-->
+                <div class="col-3">
+                    <input type="date" id="dateEndDate" name="edate"
+                           class="form-control input-area"
+                           required data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           data-bs-title="Select End Date">
+                </div>
+                <!--type-->
+                <div class="col-3">
+                    <select id="selectType"
+                            name="type" class="form-select input-area" data-bs-toggle="tooltip"
+                            data-bs-placement="bottom" data-bs-title="Select Type">
+                        <option selected disabled>Select Type</option>
+                        <option>Monthly</option>
+                        <option>Weekly</option>
+                        <option>Daily</option>
+                        <option>Yearly</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="row">
+                <div class="col-6">
+                    <button class="btn fw-bold form-btn" id="buttonGenerateReport" type="button"
+                            onclick="generateReport()">Generate Report</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn fw-bold form-btn" id="buttonPrintReport" type="button"
+                            onclick="printReport()">Print Report</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row m-2">
+        <!-- table -->
+        <div class="col-6">
+            <div class="card m-1">
+                <div class="card-body">
+                    <table id="tableEmployee" class="table table-bordered table-text">
+                        <thead id="tableHeadPurchaseBook" class="table-head text-center">
+                        <tr>
+                            <th>#</th>
+                            <th id="thHeaderType">Month</th>
+                            <th>Count</th>
+
+                        </tr>
+                        </thead>
+                        <tbody id="tableBodyPurchaseBook" class="table-body text-center">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- report -->
+        <div class="col-6">
+            <div class="card m-1">
+                <div class="card-body">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<!-- Print Preview Modal -->
+<div class="modal fade" id="printModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" id="printArea">
+                <div class="card" id="divCardPrintReport">
+                    <div class="card-header">
+                        <h1 class="text-color">Book Purchase Report</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+
+                            <div class="col-6">
+                                <p><b>Book :</b> <span id="printBook"></span></p>
+                                <p><b>Report Type :</b> <span id="printType"></span></p>
+                            </div>
+
+
+                            <div class="col-6">
+                                <p><b>Start Date :</b> <span id="printStartDate"></span></p>
+                                <p><b>End Date :</b> <span id="printEndDate"></span></p>
+                            </div>
+
+                        </div>
+
+                        <hr>
+                        <div class="row">
+
+                            <div class="col-6">
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th id="printThHeaderType">Month</th>
+                                        <th>Count</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="printTableBody">
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-6">
+                                <img id="chartImage" class="img-fluid">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-report-print"
+                        onclick="printModalContent()">
+                    Print
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{footerfragment::bottomFragment}"></div>
+<!-- link js -->
+<script src="controljs/chart.min.js"></script>
+<script src="controljs/reportpurchasebook.js"></script>
+
+</body>
+
+</html>

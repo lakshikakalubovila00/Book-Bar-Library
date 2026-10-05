@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{headerfragment::headFragment}"></head>
+<head>
+    <link rel="stylesheet" href="resources/css/opac.css">
+</head>
+<body >
+<div class="container-fluid">
+    <!-- link side bar -->
+    <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+    <section >
+        <div class="about-text">
+            <h1 class="fw-bold text-center mt-4">OPAC</h1>
+            <h3 class="fw-bold text-center mt-2">Online Public Access Catalog</h3>
+            <p class="text-center mt-2">Search Books by Title, Author, ISBN, ISSN, Series and Display Category</p>
+            <div class="row mt-3 m-2 p-4">
+                <div class="col-3">
+                    <select name="" id="selectSearchType" class="form-select select-area">
+                        <option selected disabled>Select Type</option>
+                        <option value="Title">Title</option>
+                        <option value="Author">Author</option>
+                        <option value="ISBN">ISBN</option>
+                        <option value="ISSN">ISSN</option>
+                        <option value="Series">Series</option>
+                        <option value="Display Category">Display Category</option>
+                    </select>
+                </div>
+                <div class="col-8">
+                    <input type="text" class="form-control select-area" id="textSearchedName"
+                           placeholder="Type Here" list="bookSuggestionList">
+                    <datalist id="bookSuggestionList"></datalist>
+                </div>
+                <div class="col-1">
+                    <button type="button" class="btn" id="btnSearch">
+                        <i class="fa-solid fa-magnifying-glass fa-lg" style="color: rgb(116, 192, 252);"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="p-4 pt-0">
+        <div class="card m-2 ">
+            <div class="card-body">
+                <table class="table table-bordered" id="tableBooks">
+                    <thead id="tableHeadBooks" class="table-head text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Resource Type</th>
+                        <th>Accession No</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Language</th>
+                        <th>Display Category</th>
+                        <th>Reserved</th>
+                        <th>Status</th>
+                        <th>View</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tableBodyBooks" class="table-head text-center">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <div class="modal" id="modalBookView" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>View Book</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card" id="divCardPrintBook">
+                        <div class="card-header">
+                            <h1>Book Details</h1>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover table-striped table-bordered ">
+                                <tr>
+                                    <th>Cover Image</th>
+                                    <td>
+                                        <img id="tdCoverImage" style="width: 175px; height: 200px; ">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Resource Type</th>
+                                    <td id="tdResourceType"></td>
+                                </tr>
+                                <tr>
+                                    <th>Accession No</th>
+                                    <td id="tdAccessionNo"></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Title</th>
+                                    <td id="tdTitle"></td>
+                                </tr>
+
+                                <tr id="authorRow">
+                                    <th>Author</th>
+                                    <td id="tdAuthor"></td>
+                                </tr>
+
+                                <tr id="publicationDateRow">
+                                    <th>Publication Date</th>
+                                    <td id="tdPublicationDate"></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Language</th>
+                                    <td id="tdLanguage"></td>
+                                </tr>
+                                <tr>
+                                    <th>Display Category</th>
+                                    <td id="tdDisplayCategory"></td>
+                                </tr>
+
+                                <tr id="editionRow">
+                                    <th>Edition</th>
+                                    <td id="tdEdition"></td>
+                                </tr>
+
+                                <tr id="editionYearRow">
+                                    <th>Edition Year</th>
+                                    <td id="tdEditionYear"></td>
+                                </tr>
+
+                                <tr id="startedYearRow">
+                                    <th>Started Year</th>
+                                    <td id="tdStartedYEar"></td>
+                                </tr>
+
+                                <tr id="magazineFrequencyRow">
+                                    <th>Magazine Frequency</th>
+                                    <td id="tdMagazineFrequency"></td>
+                                </tr>
+
+                                <tr id="journalFrequencyRow">
+                                    <th>Journal Frequency</th>
+                                    <td id="tdJournalFrequency"></td>
+                                </tr>
+
+                                <tr id="volumeRow">
+                                    <th>Volume</th>
+                                    <td id="tdVolume"></td>
+                                </tr>
+
+                                <tr id="issueNoRow">
+                                    <th>Issue No</th>
+                                    <td id="tdIssueNo"></td>
+                                </tr>
+
+                                <tr id="newspaperEditionRow">
+                                    <th>Newspaper Edition</th>
+                                    <td id="tdNewspaperEdition"></td>
+                                </tr>
+
+                                <tr id="newspaperFrequencyRow">
+                                    <th>Newspaper Frequency</th>
+                                    <td id="tdNewspaperFrequency"></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Publisher</th>
+                                    <td id="tdPublihser"></td>
+                                </tr>
+
+                                <tr id="isbnRow">
+                                    <th>ISBN</th>
+                                    <td id="tdIsbn"></td>
+                                </tr>
+
+                                <tr id="issnRow">
+                                    <th>ISSN</th>
+                                    <td id="tdIssn"></td>
+                                </tr>
+
+                                <tr id="seriesRow">
+                                    <th>Series</th>
+                                    <td id="tdSeries"></td>
+                                </tr>
+
+                                <tr id="seriesNoRow">
+                                    <th>Series No</th>
+                                    <td id="tdSeriesNo"></td>
+                                </tr>
+
+                                <tr id="ddcRow">
+                                    <th>DDC No</th>
+                                    <td id="tdDdcNo"></td>
+                                </tr>
+
+                                <tr id="callNoRow">
+                                    <th>Call No</th>
+                                    <td id="tdCallNo"></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Pages</th>
+                                    <td id="tdPages"></td>
+                                </tr>
+<!--                                <tr>-->
+<!--                                    <th>Shelf Location</th>-->
+<!--                                    <td id="tdShelfLocation"></td>-->
+<!--                                </tr>-->
+                                <tr>
+                                    <th>Reserved</th>
+                                    <td id="tdBookReserved"></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Status</th>
+                                    <td id="tdBookStatus"></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{footerfragment::bottomFragment}"></div>
+<script src="controljs/opac.js"></script>
+</body>
+</html>

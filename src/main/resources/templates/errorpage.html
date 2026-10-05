@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{headerfragment::headFragment}"></head>
+<head>
+    <title>403 Forbidden</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        * {
+            font-family: 'Press Start 2P', cursive;
+            box-sizing: border-box;
+        }
+
+        #app {
+            padding: 1rem;
+            background: rgb(30, 58, 95);
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            color:  rgb(214, 235, 255);
+            text-shadow: 0px 0px 10px;
+            font-size: 6rem;
+            flex-direction: column;
+        }
+
+        #app .txt {
+            font-size: 1.8rem;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 0;
+            }
+
+            49% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .blink {
+            animation-name: blink;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+            <div>403</div>
+            <div class="txt mb-4"> Forbidden<span class="blink">_</span> </div>
+            <h6><a href="/dashboard"><div >GO BACK TO DASHBOARD</div></a></h6>
+</div>
+</body>
+
+</html>

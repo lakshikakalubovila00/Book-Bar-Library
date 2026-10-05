@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{headerfragment::headFragment}"></head>
+<head>
+    <!-- link donation css -->
+    <link rel="stylesheet" href="/resources/css/donation.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <!-- link side bar -->
+        <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+        <!-- title area -->
+        <div class="row mt-2 title-row">
+            <div class="div-title p-1 text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img class="icon-img me-2" src="/resources/images/donation.png" alt="">
+                    <h3 class="fw-bold main-text">Donation Management</h3>
+                </div>
+            </div>
+        </div>
+        <!-- tab-pills -->
+        <ul class="nav nav-pills" id="tabPills" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button data-bs-toggle="pill" data-bs-target="#donationTabPillForm"
+                    class="nav-link m-1 fw-bold active pill-tab" id="donationFormPill" type="button"
+                    aria-controls="donationTabPillForm" role="tab" aria-selected="true">
+                    <h6 class="fw-bold tab-name">Donation Form</h6>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button data-bs-toggle="pill" data-bs-target="#donationTabPillTable" class="nav-link m-1"
+                    id="donationTablePill" type="button" aria-controls="donationTabPillTable" role="tab"
+                    aria-selected="false">
+                    <h6 class="fw-bold tab-name">Donation Table</h6>
+                </button>
+            </li>
+        </ul>
+        <div class="tab-content" id="pillsTabContent">
+            <!-- form -->
+            <div class="tab-pane fade show active" id="donationTabPillForm" role="tabpanel"
+                aria-labelledby="donationTabPillForm" tabindex="0">
+                <div class="card m-1">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- main form -->
+                            <div class="col-6 main-form">
+                                <form onsubmit="return false" id="donationForm" class="p-1">
+                                    <!-- required mark -->
+                                    <div class="row">
+                                        <div class="col text-end fw-bold">
+                                            <p class="required-fields">Required Fields <span
+                                                    class="text-danger">*</span></p>
+                                        </div>
+                                    </div>
+                                    <!--donator-->
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="selectDonator" class="form-label fw-bold">Select
+                                                        Donator: <span class="text-danger">*</span></label>
+                                                </span>
+                                                <select name="" id="selectDonator" class="form-select input-area"
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    data-bs-title="Select Donator"
+                                                onchange="donation.donator_id=JSON.parse(this.value); this.style.borderBottom='2px solid lightgreen';">
+                                                    <option value="Select Donator" selected disabled>Select Donator
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--purpose-->
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="textPurpose" class="form-label fw-bold">Purpose :
+                                                    </label>
+                                                </span>
+                                                <textarea name="" id="textPurpose" class="form-control input-area"
+                                                    placeholder="Enter Purpose" data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" data-bs-title="Enter Purpose"
+                                                          onkeyup="textElementValidator(
+                                         this,
+                                         '^([A-Za-z0-9\\.\\-\\/\\s\\,]{2,15})+$',
+                                         'donation',
+                                         'purpose'
+                                        );"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--status-->
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="selectDonationStatus"
+                                                           class="form-label fw-bold">Donation Status : <span
+                                                            class="text-danger">*</span></label>
+                                                </span>
+                                                <select name="" id="selectDonationStatus"
+                                                        class="form-select input-area" data-bs-toggle="tooltip"
+                                                        data-bs-placement="bottom" data-bs-title="Select
+                                                        Purchase Order Status"
+                                                        onchange="donation.donationstatus_id=JSON.parse(this.value) ;
+                                                        this.style.borderBottom='2px solid lightgreen';">
+                                                    <option value="Select Donation Status" selected disabled>
+                                                        Select Donation Status</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--note-->
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="textNote" class="form-label fw-bold">Note : </label>
+                                                </span>
+                                                <textarea name="" id="textNoteDonation" class="form-control input-area"
+                                                    placeholder="Enter Note" data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" data-bs-title="Enter Note"
+                                                          onkeyup="textElementValidator(
+                                         this,
+                                         '^([A-Za-z0-9\\.\\-\\/\\s\\,]{2,15})+$',
+                                         'donation',
+                                         'note'
+                                        );"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <!-- donated items - inner form -->
+                            <div class="col-6 inner-form">
+                                <div class="div-title text-center mt-1">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <img class="inner-form-icon-img me-2" src="/resources/images/bookcopies.png"
+                                            alt="">
+                                        <h5 class="fw-bold inner-form-name">Donate Books</h5>
+                                    </div>
+                                    <hr style="border: 1px solid rgba(44, 82, 130,0.8);">
+                                </div>
+                                <form action="" id="purchaseItemsForm" class="p-1">
+                                    <!--book id-->
+                                    <div class="row">
+                                        <div class="col-">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="selectBook" class="form-label fw-bold">Book : <span
+                                                            class="text-danger">*</span></label>
+                                                </span>
+                                                <select name="" id="selectBook" class="form-select" required
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    data-bs-title="Select Book"
+                                                        onchange="donationBook.book_id=JSON.parse(this.value) ;
+                                                        this.style.borderBottom='2px solid lightgreen';">
+                                                    <option selected disabled value="Select Book">Select Book</option>
+                                                </select>
+                                                <button class="btn fw-bold" id="btnAddNewBook" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#modalAddNewBook"><i
+                                                        class="fa-solid fa-plus fa-lg"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--quantity-->
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="textQuantity" class="form-label fw-bold">Quantity :
+                                                        <span class="text-danger">*</span></label>
+                                                </span>
+                                                <input type="text" class="form-control input-area" id="textQuantity"
+                                                    placeholder="Enter Quantity" required data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" data-bs-title="Enter Quantity"
+                                                       onkeyup="textElementValidator(
+                                                    this,
+                                                    '^(([1-9][0-9]{0,7})||([1-9][0-9]{0,6}[.][0-9]{2}))$',
+                                                    'donationBook',
+                                                    'quantity');">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- buttons -->
+                                    <div class="row mt-2">
+                                        <div class="col-6 text-start">
+                                            <button class="btn fw-bold form-btn button-clear" id="buttonClearInnerForm" type="reset">
+                                                <i class="fa-solid fa-recycle" style="color: #a3a3a3;"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <button class="btn fw-bold form-btn button-update" id="buttonUpdateInnerForm" type="button"
+                                                    onclick="donationItemUpdate()">
+                                                <i class="fa-solid fa-pen-to-square" style="color: #ffa600;"></i>
+                                            </button>
+                                            <button class="btn fw-bold form-btn button-submit" id="buttonSubmitInnerForm" type="button"
+                                                    onclick="donationItemSubmit()">
+                                                <i class="fa-solid fa-square-plus" style="color: #00c86e;"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                                <div class="row m-1">
+                                    <table class="table table-bordered" id="tableDonationItems">
+                                        <thead id="tableHeadDonationItems" class="table-head text-center">
+                                            <th>#</th>
+                                            <th>Book</th>
+                                            <th>Quantity</th>
+                                            <th>Modify</th>
+                                        </thead>
+                                        <tbody id="tableBodyDonationItems" class="table-head text-center">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <!-- buttons -->
+                        <div class="row">
+                            <div class="col-6"></div>
+                            <div class="col-6 text-end">
+                                <button class="btn fw-bold form-btn button-clear" id="buttonClearDonation" type="button">
+                                    <i class="fa-solid fa-recycle" style="color: #a3a3a3;"></i>
+                                    Clear
+                                </button>
+                                <button class="btn fw-bold form-btn button-print" id="buttonPrintDonation" type="button"
+                                        onclick="printDonationRecord(window['editOb'])">
+                                    <i class="fa-solid fa-print" style="color: #006eff;"></i>
+                                    Print
+                                </button>
+                                <button class="btn fw-bold form-btn button-delete" id="buttonDeleteDonation" type="button"
+                                        onclick="deleteDonationRecord(window['editOb'])">
+                                    <i class="fa-solid fa-trash" style="color: #fa0000;"></i>
+                                    Delete
+                                </button>
+<!--                                <button class="btn fw-bold form-btn button-update" id="buttonUpdateDonation" type="submit"-->
+<!--                                        onclick="donationUpdateButton()">-->
+<!--                                    <i class="fa-solid fa-pen-to-square" style="color: #ffa600;"></i>-->
+<!--                                    Update-->
+<!--                                </button>-->
+                                <button class="btn fw-bold form-btn button-submit" id="buttonSubmitDonation" type="submit"
+                                        onclick="donationSubmitButton()">
+                                    <i class="fa-solid fa-floppy-disk" style="color: #00c86e;"></i>
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- table -->
+            <div class="tab-pane fade" id="donationTabPillTable" role="tabpanel" aria-labelledby="donationTabPillTable"
+                tabindex="0">
+                <div class="card m-1">
+                    <div class="card-header">
+                        <div class="row m-1">
+                            <div class="col-10"></div>
+                            <div class="col-1 text-end">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-solid fa-house-circle-check fa-lg me-1" style="color: rgb(0, 194, 10);"></i>
+                                    <span>Received</span>
+                                </div>
+                            </div>
+                            <div class="col-1 text-end">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-solid fa-trash fa-lg me-1" style="color: rgb(255, 0, 0);"></i>
+                                    <span>Deleted</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered" id="tableDonation">
+                            <thead id="tableHeaddonation" class="table-head text-center">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Code</th>
+                                    <th>Donator</th>
+                                    <th>Books</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodydonation" class="table-body text-center"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--modal donation View-->
+        <div class="modal" id="modalDonationView" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>View Donation</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card" id="divCardPrintDonation">
+                            <div class="card-header">
+                                <h1>Doanation details</h1>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover table-striped table-bordered ">
+                                    <tr>
+                                        <th>Donation Code</th>
+                                        <td id="tdDonationCode"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Donator</th>
+                                        <td id="tdDonator"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Purpose</th>
+                                        <td id="tdPurpose"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Donation Status</th>
+                                        <td id="tdDonationStatus"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Note</th>
+                                        <td id="tdnote"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align: center; font-weight: bold;">
+                                            Donated Books
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"  id="tdonatedBooks"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-end">
+                        <button type="button" class="btn" onclick="printDonation()">Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- add new book modal -->
+        <div class="modal" id="modalAddNewBook" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="div-title text-center">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img class="icon-img me-2" src="/resources/images/book.png" alt="">
+                                <h3 class="fw-bold main-text">Add New Book</h3>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <!-- form area -->
+                    <div class="modal-body">
+                        <div class="card m-1">
+                            <div class="card-body">
+                                <form onsubmit="return false" id="bookForm" class="p-1">
+                                    <!-- required mark -->
+                                    <div class="row">
+                                        <div class="col text-end fw-bold">
+                                            <p class="required-fields">Required Fields <span class="text-danger">*</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!--title , resource type row-->
+                                    <div class="row">
+                                        <!-- resource type -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="selectResourceType" class="form-label fw-bold">Resource
+                                                Type : <span class="text-danger">*</span></label>
+                                        </span>
+                                                <select name="" id="selectResourceType" class="form-select input-area"
+                                                        onchange="this.style.borderBottom='2px solid lightgreen';
+                                         book.resourcetype_id=JSON.parse(this.value);"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Select
+                                                    Resource Type">
+                                                    <option value="Select Resource Type" selected disabled>Select
+                                                        Resource Type
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- title -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textTitle" class="form-label fw-bold">Title : <span
+                                                    class="text-danger">*</span></label>
+                                        </span>
+                                                <input name="" type="text" id="textTitle" class="form-control input-area"
+                                                          onkeyup="textElementValidator(
+                                                this,
+                                                '^[A-Za-z0-9][A-Za-z0-9\\s.,:\'!?()&\\-]{1,150}$',
+                                                'book',
+                                                'title')"
+                                                          onchange="generateCallNo()"
+                                                          placeholder="Enter Title" required data-bs-toggle="tooltip"
+                                                          data-bs-placement="bottom" data-bs-title="Enter Title">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--language , author or publication date row-->
+                                    <div class="row mt-2">
+                                        <!-- language -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="selectLanguage" class="form-label fw-bold">Language :
+                                                <span class="text-danger">*</span></label>
+                                        </span>
+                                                <select name="" id="selectLanguage" class="form-select input-area"
+                                                        onchange="this.style.borderBottom='2px solid lightgreen';
+                                         book.language_id=JSON.parse(this.value);"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Select
+                                                    Language" required>
+                                                    <option value="Select Language" selected disabled>Select
+                                                        Language
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- author -->
+                                        <div class="col-6" id="authorColumn">
+
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textAuthor"
+                                                   class="form-label fw-bold d-flex align-items-center gap-1">Author : <span
+                                                    class="text-danger" id="starAuthorRequired">*</span></label>
+                                        </span>
+                                                <input type="text" name="" id="textAuthor" class="form-control input-area"
+                                                       onkeyup="textElementValidator(
+                                                this,
+                                                '^[A-Z][A-Za-z\\s.&\'-]{1,100}$',
+                                                'book',
+                                                'author')"
+                                                       onchange="generateCallNo()"
+                                                       placeholder="Enter Author" data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Enter Author" list="authorList">
+                                                <datalist id="authorList" ></datalist>
+                                            </div>
+                                        </div>
+                                        <!-- publication date -->
+                                        <div class="col-6" id="publicationDateColumn">
+
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="datePublicationDate"
+                                                   class="form-label fw-bold d-flex align-items-center gap-1">Publication Date : <span
+                                                    class="text-danger">*</span></label>
+                                        </span>
+                                                <input type="date" name="" id="datePublicationDate"
+                                                       class="form-control input-area"
+                                                       onchange="book.publicationdate=this.value;
+                                            this.style.borderBottom='2px solid lightgreen';
+                                            textElementValidator(
+                                                this,
+                                                '[0-9]{4}-[0-9]{2}-[0-9]{2}',
+                                                'book',
+                                                'publicationdate')"
+                                                       data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Enter Publication Date">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!--category and price row-->
+                                    <div class="row mt-2">
+                                        <!-- category -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                    <span class="input-group-text">
+                                        <label for="selectDisplayCategory" class="form-label fw-bold">Display
+                                            Category : <span class="text-danger">*</span></label>
+                                    </span>
+                                                <select name="" id="selectDisplayCategory" class="form-select input-area"
+                                                        onchange="this.style.borderBottom='2px solid lightgreen';
+                                         book.displaycategory_id=JSON.parse(this.value);"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        data-bs-title="Select Display Category">
+                                                    <option value="Select Display Category" selected disabled>Select
+                                                        Display
+                                                        Category
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--initial price-->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="numberInitialprice" class="form-label fw-bold">Price :
+                                                <span class="text-danger">*</span></label>
+                                        </span>
+                                                <span class="input-group-text static-name">
+                                            <label for="numberInitialprice" class="form-label">Rs.</label>
+                                        </span>
+                                                <input type="text" class="form-control input-area" id="numberInitialprice"
+                                                       onkeyup="
+                                            textElementValidator(this,'^(([1-9][0-9]{0,4})||([1-9][0-9]{0,3}[.][0-9]{2}))$','book','initialprice')"
+                                                       placeholder="Enter Price" required data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Enter Price">
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!--edition, edition year row-->
+                                    <div class="row mt-2" id="editonAndEditionYearRow">
+                                        <!-- edition -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textEdition" class="form-label fw-bold">Edition :
+                                            </label>
+                                        </span>
+                                                <textarea name="" class="form-control input-area" id="textEdition"
+                                                          onkeyup="textElementValidator(
+                                                this,
+                                                '^[A-Za-z0-9\\s.\'-]{3,40}$',
+                                                'book',
+                                                'edition')"
+                                                          placeholder="Enter Edition" data-bs-toggle="tooltip"
+                                                          data-bs-placement="bottom"
+                                                          data-bs-title="Enter Edition"></textarea>
+                                            </div>
+                                        </div>
+                                        <!--  edition year-->
+                                        <div class="col-6">
+
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textEditionYear" class="form-label fw-bold">Edition
+                                                Year : </label>
+                                        </span>
+                                                <input type="text" class="form-control input-area" id="textEditionYear"
+                                                       onkeyup="validateEditionYear()"
+                                                       placeholder="Enter Edition Year" data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Enter Edition Year">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--started year, frequency -- only for magazine and journal-->
+                                    <div class="row mt-2" id="startedyearAndFrequencyRow">
+                                        <!-- Started year -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textStartedYear" class="form-label fw-bold">Started Year :
+                                            </label>
+                                        </span>
+                                                <input type="text" name="" class="form-control input-area"
+                                                       id="textStartedYear"
+                                                       onkeyup="validateJournalStartedYear()"
+                                                       placeholder="Enter Started Year" data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Enter Started Year"/>
+                                            </div>
+                                        </div>
+                                        <!-- magazine frequency-->
+                                        <div class="col-6" id="magazineFrequencyColumn">
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="selectMagazineFrequency" class="form-label fw-bold">Magazine Frequency: </label>
+                                        </span>
+                                                <select  id="selectMagazineFrequency" class="form-select input-area"
+                                                         onchange="this.style.borderBottom='2px solid lightgreen';
+                                         book.magazinefrequency_id=JSON.parse(this.value);"
+                                                         data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                         data-bs-title="Select Magazine Frequency">
+                                                    <option value="Select Magazine Frequency" selected disabled>Select
+                                                        Magazine Frequency
+                                                    </option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!-- journal frequency-->
+                                        <div class="col-6" id="journalFrequencyColumn">
+
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="selectJournalFrequency" class="form-label fw-bold">Journal Frequency: </label>
+                                        </span>
+                                                <select name="" id="selectJournalFrequency" class="form-select input-area"
+                                                        onchange="this.style.borderBottom='2px solid lightgreen';
+                                         book.journalfrequency_id=JSON.parse(this.value);"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        data-bs-title="Select Journal Frequency">
+                                                    <option value="Select Journal Frequency" selected disabled>Select
+                                                        Journal Frequency
+                                                    </option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--edition, frequency -- only for newspaper-->
+                                    <div class="row mt-2" id="newsPaperEditionandDrequencyRow">
+                                        <!-- News Paper Edition -->
+                                        <div class="col-6">
+
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="selectNewsPaperEdition" class="form-label fw-bold">Newspaper Edition: <span
+                                                    class="text-danger">*</span></label>
+                                        </span>
+                                                <select name="" id="selectNewsPaperEdition" class="form-select input-area"
+                                                        onchange="this.style.borderBottom='2px solid lightgreen';
+                                         book.newspaperedition_id=JSON.parse(this.value);"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        data-bs-title="Select Newspaper Edition">
+                                                    <option value="Select Newspaper Edition" selected disabled>Select
+                                                        Newspaper Edition
+                                                    </option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!--  frequency-->
+                                        <div class="col-6">
+
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="selectNewsPaperFrequency" class="form-label fw-bold">Newspaper Frequency: <span
+                                                    class="text-danger">*</span></label>
+                                        </span>
+                                                <select name="" id="selectNewsPaperFrequency" class="form-select input-area"
+                                                        onchange="this.style.borderBottom='2px solid lightgreen';
+                                         book.newspaperfrequency_id=JSON.parse(this.value);"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        data-bs-title="Select Newspaper Frequency">
+                                                    <option value="Select Newspaper Frequency" selected disabled>Select
+                                                        Newspaper Frequency
+                                                    </option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--volume, issue no --- only for magazine and journal-->
+                                    <div class="row mt-2" id="volumeandIssueNoRow">
+                                        <!-- volume -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textVolume" class="form-label fw-bold">Volume :
+                                            </label>
+                                        </span>
+                                                <input type="text" name="" class="form-control input-area" id="textVolume"
+                                                       onkeyup="textElementValidator(
+                                                this,
+                                                '^[1-9][0-9]{0,3}$',
+                                                'book',
+                                                'volume')"
+                                                       placeholder="Enter Volume" data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Enter Volume"/>
+                                            </div>
+                                        </div>
+                                        <!--  Issue No-->
+                                        <div class="col-6">
+
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textIssueNo" class="form-label fw-bold">Issue No: </label>
+                                        </span>
+                                                <input type="text" class="form-control input-area" id="textIssueNo"
+                                                       onkeyup="
+                                            textElementValidator(this,'^^[1-9][0-9]{0,3}$','book','issueno')"
+                                                       placeholder="Enter Issue No" data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Enter Issue No">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--publisher , isbn , issn row-->
+                                    <div class="row mt-2">
+                                        <!-- publisher -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textPublisher" class="form-label fw-bold">Publisher :
+                                                <span class="text-danger">*</span></label>
+                                        </span>
+                                                <input type="text" name="" class="form-control input-area"
+                                                       id="textPublisher"
+                                                       onkeyup="textElementValidator(
+                                                this,
+                                                '^[A-Z][A-Za-z\\s.,\'&()-]{1,99}$',
+                                                'book',
+                                                'publisher')"
+                                                       placeholder="Enter Publisher" required data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Enter Publisher" list="publisherList">
+                                                <datalist id="publisherList" ></datalist>
+                                            </div>
+                                        </div>
+                                        <!-- isbn -->
+                                        <div class="col-6" id="isbnInputArea">
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textIsbn"
+                                                   class="form-label fw-bold d-flex align-items-center gap-1">ISBN : <span
+                                                    class="text-danger" id="starISBNRequired">*</span></label>
+                                        </span>
+                                                <input type="text" class="form-control input-area" id="textIsbn"
+                                                       onkeyup="textElementValidator(
+                                                this,
+                                                '^(([0-9]{10})|([0-9]{13}))$',
+                                                'book',
+                                                'isbn')"
+                                                       placeholder="Enter ISBN" data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom"
+                                                       data-bs-title="Enter ISBN">
+                                            </div>
+
+
+                                        </div>
+                                        <!-- issn -->
+                                        <div class="col-6" id="issnInputArea">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="textIssn"
+                                                           class="form-label fw-bold d-flex align-items-center gap-1">ISSN : <span
+                                                            class="text-danger" id="starISSNRequired">*</span></label>
+                                                </span>
+                                                <input type="text" class="form-control input-area" id="textIssn"
+                                                       onkeyup="textElementValidator(
+                                                this,
+                                                '^([0-9]{8})$',
+                                                'book',
+                                                'issn')"
+                                                       placeholder="Enter ISSN">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--series and series no row-->
+                                    <div class="row mt-2" id="seriesAndSeriesNoRow">
+                                        <!-- series -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                    <span class="input-group-text">
+                                        <label for="textSeries" class="form-label fw-bold">Series : </label>
+                                    </span>
+                                                <input name="" class="form-control input-area" id="textSeries"
+                                                       onkeyup="textElementValidator(
+                                                this,
+                                                '^[A-Za-z0-9][A-Za-z0-9\\s.,:\'!?()&\\-]{1,150}$',
+                                                'book',
+                                                'seriestitle')"
+                                                       placeholder="Enter Series" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                       data-bs-title="Enter Series" list="seriesList">
+                                                <datalist id="seriesList" ></datalist>
+                                            </div>
+                                        </div>
+                                        <!-- series no -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                    <span class="input-group-text">
+                                        <label for="numberSeriesNo" class="form-label fw-bold">Series No :
+                                        </label>
+                                    </span>
+                                                <input type="number" class="form-control input-area" id="numberSeriesNo"
+                                                       onkeyup="textElementValidator(
+                                                this,
+                                                '^[1-9][0-9]{0,1}$',
+                                                'book',
+                                                'seriesno')"
+                                                       placeholder="Enter Series No" data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Enter Series No">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--ddc and call no row-->
+                                    <div class="row mt-2" id="ddcAndCallNoRow">
+                                        <!-- ddc no -->
+                                        <div class="col-6">
+
+                                            <div class="input-group">
+                                    <span class="input-group-text">
+                                        <label for="textDdcNo"
+                                               class="form-label fw-bold d-flex align-items-center gap-1">DDC No : <span
+                                                class="text-danger">*</span></label>
+                                    </span>
+                                                <input type="text" class="form-control input-area" id="textDdcNo"
+                                                       onchange="generateCallNo()"
+                                                       onkeyup="textElementValidator(
+                                                this,
+                                                '^(([0-9]{1,3})([.][0-9]{1,9})?)$',
+                                                'book',
+                                                'ddcno')"
+                                                       placeholder="Enter DDC No" required data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Enter DDC No">
+                                            </div>
+                                        </div>
+                                        <!-- call no -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                    <span class="input-group-text">
+                                        <label for="textCallNo"
+                                               class="form-label fw-bold d-flex align-items-center gap-1">Call No : <span
+                                                class="text-danger">*</span></label>
+                                    </span>
+                                                <input name="" class="form-control input-area" id="textCallNo"
+                                                       onkeyup="textElementValidator(
+                                                this,
+                                                '^(([0-9]{1,3})([.][0-9]{1,9})?[ ]([A-Z]{3}[ ])([A-Z]{3}))$',
+                                                'book',
+                                                'callno')"
+                                                       placeholder="Enter Call No" data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom"
+                                                       data-bs-title="Enter Call No">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--pages and description row-->
+                                    <div class="row mt-2">
+                                        <!-- pages -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                    <span class="input-group-text">
+                                        <label for="textPages" class="form-label fw-bold">Pages : <span
+                                                class="text-danger">*</span></label>
+                                    </span>
+                                                <input type="text" class="form-control input-area" id="textPages"
+                                                       onkeyup="textElementValidator(
+                                                this,
+                                                '^[1-9][0-9]{1,5}$',
+                                                'book',
+                                                'pages')"
+                                                       placeholder="Enter Pages" required data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Enter Pages">
+                                            </div>
+                                        </div>
+                                        <!-- description -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                    <span class="input-group-text">
+                                        <label for="textDescription" class="form-label fw-bold">Description
+                                            : </label>
+                                    </span>
+                                                <textarea name="" id="textDescription" class="form-control input-area"
+                                                          onkeyup="textElementValidator(
+                                         this,
+                                         '^([A-Za-z0-9\\.\\-\\/\\s\\,]{2,15})+$',
+                                         'book',
+                                         'description'
+                                        );"
+                                                          placeholder="Enter Description" data-bs-toggle="tooltip"
+                                                          data-bs-placement="bottom"
+                                                          data-bs-title="Enter Description"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--book status and cover image row-->
+                                    <div class="row mt-2">
+                                        <!--book status-->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                    <span class="input-group-text">
+                                        <label for="selectBookStatus" class="form-label fw-bold">Book Status : <span
+                                                class="text-danger">*</span></label>
+                                    </span>
+                                                <select name="" id="selectBookStatus" class="form-select input-area"
+                                                        onchange="this.style.borderBottom='2px solid lightgreen';
+                                         book.bookstatus_id=JSON.parse(this.value);"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        data-bs-title="Select Book Status">
+                                                    <option value="Select Book Status" selected disabled>Select
+                                                        Book Status
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- cover image -->
+                                        <div class="col-6">
+                                            <label for="fileCoverImage" class="form-label fw-bold checkbox-radio-label me-2">Cover Image :</label>
+                                            <img src="/resources/images/bookdefault.png" id="imgCoverPhoto" class="me-2" style="width: 50px; height: 50px; border-radius:100% ; border: 2px solid rgba(30, 58, 95,0.4)">
+                                            <button type="button" class="btn fw-bold btn-photo-select me-2" onclick="fileCoverImage.click()">Select</button>
+                                            <button type="button" class="btn fw-bold btn-photo-clear" onclick="clearFile()">Clear</button>
+                                            <input type="file" class="form-control input-area" id="fileCoverImage"
+                                                   placeholder="Enter Cover Image" data-bs-toggle="tooltip" style="display:none"
+                                                   data-bs-placement="bottom" data-bs-title="Enter Cover Image"  onchange="validateFile(this,book,'coverimage', imgCoverPhoto)">
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row mt-2">
+                                        <!--note-->
+                                        <div class="col">
+                                            <div class="input-group">
+                                    <span class="input-group-text">
+                                        <label for="textNote" class="form-label fw-bold">Note : </label>
+                                    </span>
+                                                <textarea name="" id="textNote" class="form-control input-area"
+                                                          onkeyup="textElementValidator(
+                                         this,
+                                         '^([A-Za-z0-9\\.\\-\\/\\s\\,]{2,15})+$',
+                                         'book',
+                                         'note'
+                                        );"
+                                                          placeholder="Enter Note" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                          data-bs-title="Enter Note"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- buttons row-->
+                                    <div class="row mt-3">
+                                        <div class="col-6">
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <!--clear-->
+                                            <button class="btn fw-bold form-btn button-clear" id="buttonClear"
+                                                    type="button">
+                                                <i class="fa-solid fa-recycle" style="color: #a3a3a3;"></i>
+                                                Clear
+                                            </button>
+                                            <!--submit-->
+                                            <button class="btn fw-bold form-btn button-submit" id="buttonSubmit"
+                                                    type="submit"
+                                                    onclick="buttonBookSubmit()">
+                                                <i class="fa-solid fa-floppy-disk" style="color: #00c86e;"></i>
+                                                Submit
+                                            </button>
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{footerfragment::bottomFragment}"></div>
+    <!-- link donation js -->
+    <script src="controljs/donation.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{headerfragment::headFragment}"></head>
+<head>
+    <!-- link member css -->
+    <link rel="stylesheet" href="/resources/css/member.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <!-- link side bar -->
+        <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+        <!-- title area -->
+        <div class="row mt-2 title-row">
+            <div class="div-title p-1 text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img class="icon-img me-2" src="/resources/images/team.png" alt="">
+                    <h3 class="fw-bold main-text">Member Management</h3>
+                </div>
+            </div>
+        </div>
+        <!-- tab-pills -->
+        <ul class="nav nav-pills" id="tabPills" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button data-bs-toggle="pill" data-bs-target="#memberTabPillForm"
+                    class="nav-link text-light m-1 fw-bold active pill-tab" id="memberFormPill" type="button"
+                    aria-controls="memberTabPillForm" role="tab" aria-selected="true">
+                    <h6 class="fw-bold tab-name">Member Form</h6>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button data-bs-toggle="pill" data-bs-target="#memberTabPillTable" class="nav-link text-light m-1"
+                    id="memberTablePill" type="button" aria-controls="memberTabPillForm" role="tab"
+                    aria-selected="false">
+                    <h6 class="fw-bold tab-name">Member Table</h6>
+                </button>
+            </li>
+        </ul>
+        <div class="tab-content" id="pillsTabContent">
+            <!-- form -->
+            <div class="tab-pane fade show active" id="memberTabPillForm" role="tabpanel"
+                aria-labelledby="memberTabPillForm" tabindex="0">
+                <div class="card m-1">
+                    <div class="card-body">
+                        <form onsubmit="return false" id="memberForm" class="p-1">
+                            <!-- required mark -->
+                            <div class="row">
+                                <div class="col text-end fw-bold">
+                                    <p class="required-fields">Required Fields <span class="text-danger">*</span></p>
+                                </div>
+                            </div>
+                            <!-- name ,nic ,dob, age -->
+                            <div class="row">
+                                <!-- name -->
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textMemberName" class="form-label fw-bold">Name : <span
+                                                    class="text-danger">*</span></label>
+                                        </span>
+                                        <input type="text" class="form-control input-area" id="textMemberName"
+                                            placeholder="Enter Name" onkeyup="textElementValidator(
+                                                this,
+                                                '^([A-Z][a-z]{2,15}[ ])+([d][e][ ])?([A-Z][a-z]{2,20})$',
+                                                'member',
+                                                'name')" required data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                            data-bs-title="Enter Name">
+
+                                    </div>
+                                </div>
+                                <!-- nic -->
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textMemberNic" class="form-label fw-bold d-flex align-items-center gap-1">NIC :
+                                            <span
+                                                    class="text-danger" id="starRequiredNic">*</span></label>
+                                        </span>
+                                        <input type="text" class="form-control input-area" id="textMemberNic"
+                                            placeholder="Enter NIC Number" data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" data-bs-title="Enter NIC Number">
+
+                                    </div>
+                                </div>
+                                <!-- dob -->
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="dateDOB" class="form-label fw-bold">Date Of Birth : <span
+                                                    class="text-danger">*</span></label>
+                                        </span>
+                                        <input type="date" class="form-control input-area" id="dateDOB"
+                                               onkeydown="return false"
+                                               placeholder="Enter Date Of Birth" data-bs-toggle="tooltip"
+                                               data-bs-placement="bottom" data-bs-title="Enter Date Of Birth" required >
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- email ,mobile ,address -->
+                            <div class="row mt-3">
+                                <!--member type-->
+                                <div class="col-4">
+                                    <div class="input-group member-type-group">
+                                        <label for="radioChild"
+                                               class="form-label fw-bold checkbox-radio-label ms-2">Member Type
+                                            :
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div id="radioMemberTypeContainer" class="d-flex gap-3 ms-2">
+                                            <div class="form-check">
+                                                <input type="radio" id="radioChild"
+                                                       class="form-check-input input-radio"
+                                                       onchange="member.membertype=this.value;" value="Child"
+                                                       name="membertype" data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Select Guarantor Type"
+                                                       required>
+                                                <label for="radioChild"
+                                                       class="form-check-label checkbox-radio-label">Child</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" id="radioAdult"
+                                                       onchange="member.membertype=this.value;"
+                                                       class="form-check-input input-radio" value="Adult"
+                                                       name="membertype" required>
+                                                <label for="radioAdult"
+                                                       class="form-check-label checkbox-radio-label">Adult</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- email -->
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textMemberEmail" class="form-label fw-bold d-flex align-items-center gap-1">Email :
+                                            <span
+                                                    class="text-danger" id="starRequiredEmail">*</span></label>
+                                        </span>
+                                        <input type="text" class="form-control input-area" id="textMemberEmail" onkeyup="textElementValidator(
+                                            this,
+                                            '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$',
+                                            'member',
+                                            'email'
+                                        );" placeholder="Enter Email Address" data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" data-bs-title="Enter Email Address">
+
+                                    </div>
+                                </div>
+                                <!-- mobile -->
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textMemberMobileNo" class="form-label fw-bold d-flex align-items-center gap-1">Mobile No : <span
+                                                    class="text-danger" id="starRequiredMobileNo">*</span></label>
+                                        </span>
+                                        <span class="input-group-text fw-bold">0</span>
+                                        <input type="text" class="form-control input-area" id="textMemberMobileNo"
+                                            onkeyup="textElementValidator(
+                                            this,
+                                            '^([7][01245678][0-9]{7})$',
+                                            'member',
+                                            'mobileno'
+                                        );" placeholder="7XXXXXXXX" maxlength="9" data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" data-bs-title="Enter Mobile Number">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <!-- address -->
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textMemberAddress" class="form-label fw-bold">Address : <span
+                                                    class="text-danger">*</span></label>
+                                        </span>
+                                        <input type="text" class="form-control input-area" id="textMemberAddress"
+                                               onkeyup="textElementValidator(
+                                            this,
+                                            '^([a-zA-Z0-9\\/\\-\\.\\,]{1,20}[\\s])+[a-zA-Z0-9\\-]{1,20}$',
+                                            'member',
+                                            'address'
+                                        );" placeholder="Enter Address" data-bs-toggle="tooltip"
+                                               data-bs-placement="bottom" data-bs-title="Enter Address" required>
+
+                                    </div>
+                                </div>
+                                <!-- member status -->
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="selectMemberStatus" class="form-label fw-bold">Status : <span
+                                                    class="text-danger">*</span></label>
+                                        </span>
+                                        <select required class="form-select input-area" id="selectMemberStatus"
+                                                onchange="this.style.borderBottom='2px solid lightgreen';
+                                         member.memberstatus_id=JSON.parse(this.value);" data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom" data-bs-title="Select Status">
+                                            <option disabled>Select Status</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- photo -->
+                                <div class="col-4">
+                                            <label for="filePhoto" class="form-label fw-bold">Photo :
+                                            </label>
+                                        <img src="/resources/images/memberdefault.png" id="imgMemberPhoto" class="me-2" style="width: 50px; height: 50px; border-radius:5px">
+                                        <button type="button" class="btn fw-bold btn-photo-select me-2" onclick="filePhoto.click()">Select</button>
+                                        <button type="button" class="btn fw-bold btn-photo-clear" onclick="clearFile()">Clear</button>
+                                        <input type="file" class="form-control input-area" id="filePhoto"
+                                                placeholder="Upload Photo"
+                                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                               data-bs-title="Upload Photo" style="display:none"
+                                               onchange="validateFile(this,member,'memberphoto', imgMemberPhoto)">
+                                </div>
+                            </div>
+                            <!-- button Add Guarantor, member status, photo -->
+                            <div class="row mt-3">
+                                <div class="col-4">
+                                    <div class="input-group guarantor-type-group">
+                                        <label for="radioGuardian"
+                                               class="form-label fw-bold checkbox-radio-label ms-2">Guarantor Type
+                                            :
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div id="radioContainer" class="d-flex gap-3 ms-2">
+                                            <div class="form-check">
+                                                <input type="radio" id="radioGuardian"
+                                                       class="form-check-input input-radio"
+                                                       onchange="member.guarantortype=this.value;" value="Guardian"
+                                                       name="guarantortype" data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Select Guarantor Type"
+                                                       required>
+                                                <label for="radioGuardian"
+                                                       class="form-check-label checkbox-radio-label">Guardian</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" id="radioGuarantor"
+                                                       onchange="member.guarantortype=this.value;"
+                                                       class="form-check-input input-radio" value="Guarantor"
+                                                       name="guarantortype" required>
+                                                <label for="radioGuarantor"
+                                                       class="form-check-label checkbox-radio-label">Guarantor</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <input type="text"
+                                                   id="guarantorNic"
+                                                   class="form-control"
+                                                   placeholder="Enter Guarantor NIC"
+                                                   data-bs-toggle="tooltip"
+                                                   data-bs-placement="bottom" data-bs-title="Enter Guarantor NIC"
+                                                   onkeyup="searchGuarantor()">
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text fw-bold">0</span>
+                                                <input type="text"
+                                                       id="guarantorMobileNo"
+                                                       class="form-control"
+                                                       placeholder="7XXXXXXXX" maxlength="9"
+                                                       data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom" data-bs-title="Enter Guarantor Mobile Number"
+                                                       onkeyup="searchGuarantor()">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-4">
+                                            <select id="selectGuarantor" class="form-select"
+                                                    onchange="this.style.borderBottom='2px solid lightgreen';">
+                                                <option value="">Select Guarantor</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <!-- button Add Guarantor -->
+                                    <button class="btn fw-bold text-center col-4" id="btnAddGuarantor" type="button"
+                                            data-bs-toggle="modal" data-bs-target="#modalGuarantorForm">Add New Guarantor
+                                    </button>
+                                </div>
+
+                            </div>
+                            <!--  note -->
+                            <div class="row mt-3">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textNote" class="form-label fw-bold">Note : </label>
+                                        </span>
+                                    <textarea id="textNote" placeholder="Enter Note" class="form-control input-area"
+                                              data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                              data-bs-title="Enter Note"></textarea>
+                                </div>
+                            </div>
+                            <!-- buttons -->
+                            <div class="row mt-3">
+                                <div class="col-6">
+
+                                </div>
+
+                                <div class="col-6 text-end">
+                                    <button class="btn fw-bold form-btn button-clear" id="buttonClearMember"
+                                            type="button">
+                                        <i class="fa-solid fa-recycle" style="color: #a3a3a3;"></i>
+                                        Clear
+                                    </button>
+
+
+                                    <button class="btn fw-bold form-btn button-print" id="buttonPrintMember"
+                                            type="button" onclick="printMemberRecord(window['editOb'])">
+                                        <i class="fa-solid fa-print" style="color: #006eff;"></i>
+                                        Print
+                                    </button>
+
+
+                                    <button class="btn fw-bold form-btn button-delete" id="buttonDeleteMember"
+                                            type="button" onclick="deleteMemberRecord(window['editOb'])">
+                                        <i class="fa-solid fa-trash" style="color: #fa0000;"></i>
+                                        Delete
+                                    </button>
+
+                                    <button class="btn fw-bold form-btn button-update" id="buttonUpdateMember"
+                                        type="submit" onclick="buttonMemberUpdate()">
+                                        <i class="fa-solid fa-pen-to-square" style="color: #ffa600;"></i>
+                                        Update
+                                    </button>
+
+
+                                    <button class="btn fw-bold form-btn button-submit" id="buttonSubmitMember"
+                                        type="submit" onclick="buttonMemberSubmit()">
+                                        <i class="fa-solid fa-floppy-disk" style="color: #00c86e;"></i>
+                                        Submit
+                                    </button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- table -->
+            <div class="tab-pane fade" id="memberTabPillTable" role="tabpanel" aria-labelledby="memberTabPillTable"
+                tabindex="0">
+                <div class="card m-1">
+                    <div class="card-header">
+                        <div class="row m-1">
+                            <div class="col-6"></div>
+
+                            <div class="col-1 text-end">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-solid fa-circle-check fa-lg me-1 " style="color:rgb(0, 189, 72);"></i>
+                                    <span>Active</span>
+                                </div>
+                            </div>
+                            <div class="col-1 text-end">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-solid fa-circle-xmark fa-lg me-1 " style="color: #ff0000;"></i>
+                                    <span>Inactive</span>
+                                </div>
+                            </div>
+                            <div class="col-1 text-end me-4">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-solid fa-circle-pause fa-lg me-1" style="color: #FFD43B;"></i>
+                                    <span>Suspended</span>
+                                </div>
+
+                            </div>
+                            <div class="col-1 text-end me-4 ">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-solid fa-ban fa-lg me-1" style="color: #75001d;"></i>
+                                    <span>Blacklisted</span>
+                                </div>
+                            </div>
+                            <div class="col-1 text-end">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-solid fa-trash fa-lg me-1" style="color: rgb(255, 0, 0);"></i>
+                                    <span>Deleted</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered" id="tableMember">
+                            <thead id="tableHeadMember" class="table-head text-center">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Member Photo</th>
+                                    <th>Member No</th>
+                                    <th>Name</th>
+                                    <th>Member Type</th>
+                                    <th>Guarantor</th>
+                                    <th>Mobile No</th>
+                                    <th>Address</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyMember" class="table-body text-center">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- add guarantee modal -->
+        <div class="modal" id="modalGuarantorForm" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="div-title text-center">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img class="icon-img me-2" src="/resources/images/guarantor.png" alt="">
+                                <h3 class="fw-bold main-text">Add Guarantor</h3>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <!-- form area -->
+                    <div class="modal-body">
+                        <div class="card m-1">
+                            <div class="card-body">
+                                <form onsubmit="return false" action="" id="guarantorForm" class="p-1">
+                                    <!-- required mark -->
+                                    <div class="row">
+                                        <div class="col text-end fw-bold">
+                                            <p class="required-fields">Required Fields <span
+                                                    class="text-danger">*</span></p>
+                                        </div>
+                                    </div>
+                                    <!--nic, name -->
+                                    <div class="row mt-3">
+
+                                        <!-- nic -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="textGuarantorNic" class="form-label fw-bold">NIC : <span
+                                                            class="text-danger">*</span>
+                                                    </label>
+                                                </span>
+                                                <input type="text" class="form-control input-area" id="textGuarantorNic"
+                                                    onkeyup="textElementValidator(
+                                                    this,'^(([0-9]{9}[vV])|([0-9]{12}))$','guarantor','nic')"
+                                                    placeholder="Enter NIC Number" data-bs-toggle="tooltip"
+                                                    data-bs-placement="right" data-bs-title="Enter NIC Number" required>
+
+                                            </div>
+                                        </div>
+                                        <!-- name -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="textGuarantorName" class="form-label fw-bold">Name :
+                                                        <span class="text-danger">*</span></label>
+                                                </span>
+                                                <input type="text" class="form-control input-area"
+                                                       id="textGuarantorName"
+                                                       onkeyup="textElementValidator(
+                                                    this,'^([A-Z][a-z]{2,15}[ ])+([d][e][ ])?([A-Z][a-z]{2,20})$','guarantor','name')"
+                                                       placeholder="Enter Name" required data-bs-toggle="tooltip"
+                                                       data-bs-placement="right" data-bs-title="Enter Name">
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- email ,mobile  -->
+                                    <div class="row mt-3">
+                                        <!-- email -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="textGuarantorEmail" class="form-label fw-bold">Email :
+                                                    </label>
+                                                </span>
+                                                <input type="text" class="form-control input-area"
+                                                    id="textGuarantorEmail" placeholder="Enter Email Address" onkeyup="textElementValidator(
+                                            this,
+                                            '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$',
+                                            'guarantor',
+                                            'email'
+                                        );" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                    data-bs-title="Enter Email Address">
+
+                                            </div>
+                                        </div>
+                                        <!-- mobile -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="textGuarantorMobileNo" class="form-label fw-bold">Mobile
+                                                        No :
+                                                        <span class="text-danger">*</span></label>
+                                                </span>
+                                                <span class="input-group-text fw-bold">0</span>
+                                                <input type="text" class="form-control input-area" onkeyup="textElementValidator(
+                                            this,
+                                            '^([7][01245678][0-9]{7})$',
+                                            'guarantor',
+                                            'mobileno'
+                                        );" id="textGuarantorMobileNo" placeholder="7XXXXXXXX" maxlength="9"
+                                                    data-bs-toggle="tooltip" data-bs-placement="right"
+                                                    data-bs-title="Enter Mobile Number" required>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- address, note -->
+                                    <div class="row mt-3">
+                                        <!-- address -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="textGuarantorAddress" class="form-label fw-bold">Address
+                                                        : <span class="text-danger">*</span></label>
+                                                </span>
+                                                <input type="text" class="form-control input-area"
+                                                    id="textGuarantorAddress" placeholder="Enter Address" onkeyup="textElementValidator(
+                                            this,
+                                            '^([A-Za-z0-9.\\-\\/\\s]{1,50},\\s)+([A-Z][a-z]{2,30})(\\s[0-9]{1,2})?\\.?$',
+                                            'guarantor',
+                                            'address'
+                                        );" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                    data-bs-title="Enter Address" required>
+
+                                            </div>
+                                        </div>
+                                        <!--status-->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="selectGuarantorStatus" class="form-label fw-bold">Status : <span
+                                                    class="text-danger">*</span></label>
+                                        </span>
+                                                <select required class="form-select input-area" id="selectGuarantorStatus"
+                                                        onchange="this.style.borderBottom='2px solid lightgreen';
+                                         guarantor.guarantorstatus_id=JSON.parse(this.value);" data-bs-toggle="tooltip"
+                                                        data-bs-placement="bottom" data-bs-title="Select Status">
+                                                    <option disabled>Select Status</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- buttons -->
+                                    <div class="row mt-3">
+                                        <div class="col-6">
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <button class="btn fw-bold form-btn button-clear" id="buttonClearGuarantor"
+                                                    type="button">
+                                                <i class="fa-solid fa-recycle" style="color: #006eff;"></i>
+                                                Clear
+                                            </button>
+                                            <button class="btn fw-bold form-btn button-submit"
+                                                id="buttonSubmitGuarantor" type="submit"
+                                                onclick="buttonGuarantorSubmit()">
+                                                <i class="fa-solid fa-floppy-disk" style="color: #00c86e;"></i>
+                                                Submit
+                                            </button>
+                                            <button class="btn fw-bold form-btn button-update" id="buttonUpdateGuarantor"
+                                                    type="submit" onclick="buttonGuarantorUpdate()">
+                                                <i class="fa-solid fa-pen-to-square" style="color: #ffa600;"></i>
+                                                Update
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal member view -->
+        <div class="modal" id="modalMemberView" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>View Member</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card" id="divCardPrintMember">
+                            <div class="card-header">
+                                <h1>Member Details</h1>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover table-strped table-bordered">
+                                    <tr>
+                                        <th>Member Photo</th>
+                                        <td>
+                                            <img id="tdMemberPhoto" style="width: 50px; height: 50px; border-radius:100% ; border: 2px solid rgba(30, 58, 95,0.4)">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Member No</th>
+                                        <td id="tdMemberNo"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Member Name</th>
+                                        <td id="tdMemberName"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Member Type</th>
+                                        <td id="tdMemberType"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nic</th>
+                                        <td id="tdMemberNic"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date Of Birth</th>
+                                        <td id="tdMemberDob"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email</th>
+                                        <td id="tdMemberEmail"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mobile No</th>
+                                        <td id="tdMemberMobileNo"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Address</th>
+                                        <td id="tdMemberAddress"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Guarantor type</th>
+                                        <td id="tdGuarantorType"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Guarantor Name</th>
+                                        <td id="tdMemberGuarantorName"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Member Status</th>
+                                        <td id="tdMemberStatus"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-end">
+                        <button type="button" class="btn" onclick="printMember()">Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{footerfragment::bottomFragment}"></div>
+    <!-- link member js -->
+    <script src="controljs/member.js"></script>
+</body>
+
+</html>

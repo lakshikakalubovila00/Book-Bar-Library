@@ -1,0 +1,58 @@
+/* member Registration management */
+#memberRegistrationFormPill {
+    border: 1px solid rgba(96, 165, 250, 0.8);
+    box-shadow: 1px 1px 1px rgba(96, 165, 250, 0.7), -1px -1px 1px rgba(96, 165, 250, 0.7);
+    border-radius: 5px;
+}
+
+#memberRegistrationTablePill {
+    border: 1px solid rgba(96, 165, 250, 0.8);
+    box-shadow: 1px 1px 1px rgba(96, 165, 250, 0.7), -1px -1px 1px rgba(96, 165, 250, 0.7);
+    border-radius: 5px;
+}
+
+#memberRegistrationFormPill.active {
+    /* background: linear-gradient(to right, rgb(234, 201, 255), rgb(180, 201, 255)); */
+    background-color: rgb(214, 235, 255);
+
+}
+
+#memberRegistrationTablePill.active {
+    /* background: linear-gradient(to right, rgb(236, 208, 253), rgb(180, 201, 255)); */
+    background-color: rgb(214, 235, 255);
+}
+
+#memberRegistrationFormPill:hover {
+    background-color: rgb(214, 235, 255);
+}
+
+#memberRegistrationTablePill:hover {
+    background-color: rgb(214, 235, 255);
+}
+
+#btnAddGuarantor {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: rgb(44, 82, 130);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: 37px;
+}
+
+#btnAddGuarantor:hover {
+    box-shadow: 1px 1px 1px rgb(96, 165, 250);
+}
+
+#filePhoto {
+    padding: 5px 10px;
+
+}
+
+#btnAddGuarantor {
+    color: rgb(44, 82, 130);
+    border-radius: 5px;
+    height: 37px;
+    background-color: rgba(255, 255, 255, 0.6);
+    width: 380px;
+    margin-left: 12px;
+    margin-right: 17px;
+}

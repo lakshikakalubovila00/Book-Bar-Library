@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{headerfragment::headFragment}"></head>
+<head>
+    <link rel="stylesheet" href="/resources/css/receivenote.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <!-- link side bar -->
+        <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+        <!-- title area -->
+        <div class="row mt-2 title-row">
+
+            <div class="div-title p-1 text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img class="icon-img me-2" src="/resources/images/receivenote.png" alt="">
+                    <h3 class="fw-bold main-text">Good Receive Note</h3>
+                </div>
+            </div>
+        </div>
+        <!-- tab-pills -->
+        <ul class="nav nav-pills" id="tabPills" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button data-bs-toggle="pill" data-bs-target="#receiveNoteTabPillForm"
+                    class="nav-link m-1 fw-bold active pill-tab" id="receiveNoteFormPill" type="button"
+                    aria-controls="receiveNoteTabPillForm" role="tab" aria-selected="true">
+                    <he class="fw-bold tab-name">GRN Form</he>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button data-bs-toggle="pill" data-bs-target="#receiveNoteTabPillTable" class="nav-link m-1"
+                    id="receiveNoteTablePill" type="button" aria-controls="receiveNoteTabPillForm" role="tab"
+                    aria-selected="false">
+                    <he class="fw-bold tab-name">GRN Table</he>
+                </button>
+            </li>
+        </ul>
+        <div class="tab-content" id="pillsTabContent">
+            <!-- form -->
+            <div class="tab-pane fade show active" id="receiveNoteTabPillForm" role="tabpanel"
+                aria-labelledby="receiveNoteTabPillForm" tabindex="0">
+                <div class="card m-1">
+                    <div class="card-body">
+                        <!-- main form -->
+                        <div class="row">
+                            <div class="main-form">
+                                <form onsubmit="return false" id="receiveNoteForm" class="p-1">
+                                    <!-- required mark -->
+                                    <div class="row">
+                                        <div class="col text-end fw-bold">
+                                            <p class="required-fields">Required Fields <span
+                                                    class="text-danger">*</span></p>
+                                        </div>
+                                    </div>
+                                    <!-- Supplierid  , Purchaseorderid-->
+                                    <div class="row">
+                                        <!--Supplierid - FK R  -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="selectSupplier" class="form-label fw-bold">Supplier:
+                                                        <span class="text-danger">*</span></label>
+                                                </span>
+                                                <select name="" id="selectSupplier" class="form-select input-area" required
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    data-bs-title="Select Supplier"
+                                                        onchange="grn.supplier_id=JSON.parse(this.value) ;
+                                                        this.style.borderBottom='2px solid lightgreen'; filterPOBySupplier() ;">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- Purchaseorderid - FK R -->
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="selectPurchaseOrderCode" class="form-label fw-bold">Purchase
+                                                        Order Code :
+                                                        <span class="text-danger">*</span></label>
+                                                </span>
+                                                <select name="" id="selectPurchaseOrderCode" class="form-select input-area" required
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        data-bs-title="Select Purchase Order Code"
+                                                        onchange="grn.purchase_id=JSON.parse(this.value) ;
+                                                        this.style.borderBottom='2px solid lightgreen'; filterBooksByPO()" >
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  Supplier Billno ,Datereceived , Status-->
+                                    <div class="row mt-2">
+                                        <!-- Supplier Billno - R -->
+                                        <div class="col-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="textSupplierBillNo" class="form-label fw-bold">Supplier Bill No :
+                                                        <span class="text-danger">*</span></label>
+                                                </span>
+                                                <input type="text" class="form-control input-area" id="textSupplierBillNo"
+                                                    placeholder="Enter Supplier Bill No" required data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" data-bs-title="Enter Supplier Bill No"
+                                                       onkeyup="textElementValidator(
+                                         this,
+                                         '^[A-Za-z0-9-_]{6,25}$',
+                                         'grn',
+                                         'supplierbillno'
+                                        );">
+                                            </div>
+                                        </div>
+                                        <!-- Datereceived - R -->
+                                        <div class="col-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="dateReceivedDate" class="form-label fw-bold">Received
+                                                        Date :
+                                                        <span class="text-danger">*</span></label>
+                                                </span>
+                                                <input type="date" class="form-control input-area" id="dateReceivedDate"
+                                                       required data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                       data-bs-title="Select Received Date"
+                                                       onchange="grn.datereceived=this.value;
+                                                    this.style.borderBottom='2px solid lightgreen';" onkeydown="return false">
+                                            </div>
+                                        </div>
+                                        <!-- Status - R -->
+                                        <div class="col-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="selectStatus" class="form-label fw-bold">Status :
+                                                        <span class="text-danger">*</span></label>
+                                                </span>
+                                                <select name="" id="selectStatus" class="form-select input-area" required
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        data-bs-title="Select Status"
+                                                        onchange="grn.grnstatus_id=JSON.parse(this.value) ;
+                                                        this.style.borderBottom='2px solid lightgreen';">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- inner form -->
+                        <div class="row m-1 mt-3">
+                            <div class="inner-form">
+                                <!-- sub title -->
+                                <div class="div-title text-center m-1 mt-2">
+                                    <h5 class="fw-bold inner-form-name">Received Book List</h5>
+                                </div>
+                                <form action="" id="receiveNoteDetailsForm" class="p-1">
+                                    <!-- item line -->
+                                    <div class="row">
+                                        <!-- Bookid - FK R -->
+                                        <div class="col-4">
+                                            <label for="selectBook" class="form-label fw-bold checkbox-radio-label">Book
+                                                :
+                                                <span class="text-danger">*</span></label>
+                                            <select name="" id="selectBook" class="form-select input-area" required
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    data-bs-title="Select Book"
+                                                    onchange="grnHasBook.book_id=JSON.parse(this.value) ;
+                                                        this.style.borderBottom='2px solid lightgreen'; getPOBookInfo()">
+                                                <option selected disabled value="Select Book">Select Book</option>
+                                            </select>
+                                        </div>
+                                        <!-- Unitprice (price per book) - R -->
+                                        <div class="col-2">
+                                            <label for="textUnitPrice" class="form-label fw-bold checkbox-radio-label">Unit Price
+                                                : <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control input-area" id="textUnitPrice"
+                                                   placeholder="Enter Unit Price" required data-bs-toggle="tooltip"
+                                                   data-bs-placement="bottom" data-bs-title="Enter Unit Price"
+                                                   onkeyup="textElementValidator(
+                                                    this,
+                                                    '^(([1-9][0-9]{0,7})||([1-9][0-9]{0,6}[.][0-9]{2}))$',
+                                                    'grnHasBook',
+                                                    'unitprice') ; generateLinePrice()">
+                                        </div>
+                                        <!--Orderedquantity (Quantity ordered in Purchase Order) - R  -->
+                                        <div class="col-2">
+                                            <label for="textOrderedQuantity" class="form-label fw-bold checkbox-radio-label">Ordered
+                                                Qty :
+                                                <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control input-area" id="textOrderedQuantity"
+                                                placeholder="Enter Ordered Qty" required data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom" data-bs-title="Enter Ordered Qty"
+                                                   onkeyup="textElementValidator(
+                                                    this,
+                                                    '^(([1-9][0-9]{0,7}) )$',
+                                                    'grnHasBook',
+                                                    'orderedquantity')">
+                                        </div>
+                                        <!-- Receivedquantity (Actually received quantity) - R -->
+                                        <div class="col-2">
+                                            <label for="textReceivedQuantity" class="form-label fw-bold checkbox-radio-label">Received
+                                                Qty :
+                                                <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control input-area" id="textReceivedQuantity"
+                                                placeholder="Enter Received Qty" required data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom" data-bs-title="Enter Received Qty"
+                                                   onkeyup="validateReceivedQuantity(); generateLinePrice()" >
+                                        </div>
+                                        <!-- Lineamount (receivedquantity x unitprice) - auto -->
+                                        <div class="col-2">
+                                            <label for="textLineAmount" class="form-label fw-bold checkbox-radio-label">Line Amount
+                                                : <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control input-area" id="textLineAmount"
+                                                placeholder="Line Amount" required
+                                                   onkeyup="textElementValidator(
+                                                    this,
+                                                    '^(([1-9][0-9]{0,7})||([1-9][0-9]{0,6}[.][0-9]{2}))$',
+                                                    'grnHasBook',
+                                                    'lineamount')">
+                                        </div>
+                                    </div>
+                                    <!-- Condition , Remarks-->
+                                    <div class="row mt-2">
+                                        <!-- Condition(New, damaged, missing) - R -->
+                                        <div class="col-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="selectCondition" class="form-label fw-bold">Condition :
+                                                        <span class="text-danger">*</span></label>
+                                                </span>
+                                                <select name="" id="selectCondition" class="form-select" required
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    data-bs-title="Select Condition"
+                                                        onchange="grnHasBook.conditions_id=JSON.parse(this.value) ;
+                                                        this.style.borderBottom='2px solid lightgreen';">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- Remarks (Comments if mismatched books) - O -->
+                                        <div class="col-8">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <label for="textRemarks" class="form-label fw-bold">Remarks :
+                                                    </label>
+                                                </span>
+                                                <input type="text" class="form-control input-area" id="textRemarks"
+                                                    placeholder="Enter Remarks" data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" data-bs-title="Enter Remarks"
+                                                       onkeyup="textElementValidator(
+                                                    this,
+                                                    '^(([1-9][0-9]{0,7})||([1-9][0-9]{0,6}[.][0-9]{2}))$',
+                                                    'grnHasBook',
+                                                    'remarks')">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- buttons -->
+                                    <div class="row mt-2">
+                                        <div class="col-6 text-start">
+                                            <button class="btn fw-bold form-btn button-clear" id="buttonClearInnerForm" type="reset">
+                                                <i class="fa-solid fa-recycle" style="color: #a3a3a3;"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <button class="btn fw-bold form-btn button-update" id="buttonUpdateInnerForm" type="button"
+                                            onclick="receivedBookUpdate()">
+                                                <i class="fa-solid fa-pen-to-square" style="color: #ffa600;"></i>
+                                            </button>
+                                            <button class="btn fw-bold form-btn button-submit" id="buttonSubmitInnerForm" type="button"
+                                            onclick="receivedBookSubmit()">
+                                                <i class="fa-solid fa-square-plus" style="color: #00c86e;"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                                <div class="row m-1 mt-2 p-1">
+                                    <table class="table table-bordered" id="grnHasBookTable">
+                                        <thead id="tableHeadReceivedBooks" class="table-head text-center">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Book</th>
+                                                <th>Ordered Qty</th>
+                                                <th>Received Qty</th>
+                                                <th>Unit Price</th>
+                                                <th>Line Amount</th>
+                                                <th>Condition</th>
+                                                <th>Modify</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBodyReceivedBooks" class="table-body text-center">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6 ">
+                                <!-- Note - O -->
+                                <div class="row mt-2">
+                                    <div class="input-group">
+                                    <span class="input-group-text">
+                                        <label for="textNote" class="form-label fw-bold">Note : </label>
+                                    </span>
+                                        <input type="text" class="form-control input-area" id="textNote"
+                                               placeholder="Enter Note" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                               data-bs-title="Enter Note"
+                                               onkeyup="textElementValidator(
+                                         this,
+                                         '^([A-Za-z0-9\\.\\-\\/\\s\\,]{2,15})+$',
+                                         'grn',
+                                         'note'
+                                        );">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <!-- Totalbooks (Total number of books received) - auto -->
+                                <div class="row mt-2">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textTotalBooks" class="form-label fw-bold">Total Books :
+                                                <span class="text-danger">*</span></label>
+                                        </span>
+                                        <input type="text" class="form-control input-area" id="textTotalBooks"
+                                            placeholder="Enter Total Books" required data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" data-bs-title="Enter Total Books" disabled
+                                               onkeyup="textElementValidator(this,'^([1-9][0-9]{0,6})$','grn','totalbooks')">
+                                    </div>
+                                </div>
+                                <!-- Total amount (Total amount for received books) - auto -->
+                                <div class="row mt-2">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textTotalAmount" class="form-label fw-bold">Total Amount :
+                                                <span class="text-danger">*</span></label>
+                                        </span>
+                                        <span class="input-group-text static-name">
+                                            <label for="textTotalAmount" class="form-label">Rs.</label>
+                                        </span>
+                                        <input type="text" class="form-control input-area" id="textTotalAmount"
+                                            placeholder="Enter Total Amount" required data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" data-bs-title="Enter Total Amount" disabled
+                                               onkeyup="textElementValidator(this,'^(([1-9][0-9]{0,7})||([1-9][0-9]{0,6}[.][0-9]{2}))$','grn','totalamount')">
+                                    </div>
+                                </div>
+                                <!-- Discount - O -->
+                                <div class="row mt-2">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textDiscount" class="form-label fw-bold">Discount :
+                                            </label>
+                                        </span>
+                                        <span class="input-group-text static-name">
+                                            <label for="textDiscount" class="form-label">Rs.</label>
+                                        </span>
+                                        <input type="text" class="form-control input-area" id="textDiscount"
+                                            placeholder="Enter Discount" data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" data-bs-title="Enter Discount"
+                                               onkeyup="textElementValidator(this,'^(([1-9][0-9]{0,7})||([1-9][0-9]{0,6}[.][0-9]{2}))$','grn','discount'); calculateNetAmount() ">
+                                    </div>
+                                </div>
+                                <!-- Taxamount - O -->
+                                <div class="row mt-2">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textTaxAmount" class="form-label fw-bold">Tax Amount :
+                                            </label>
+                                        </span>
+                                        <span class="input-group-text static-name">
+                                            <label for="textTaxAmount" class="form-label">Rs.</label>
+                                        </span>
+                                        <input type="text" class="form-control input-area" id="textTaxAmount"
+                                            placeholder="Enter Tax Amount" data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" data-bs-title="Enter Tax Amount"
+                                               onkeyup="textElementValidator(this,'^(([1-9][0-9]{0,7})||([1-9][0-9]{0,6}[.][0-9]{2}))$','grn','taxamount'); calculateNetAmount()">
+                                    </div>
+                                </div>
+                                <!-- Netamount (Final total after discount + tax) - auto -->
+                                <div class="row mt-2">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textNetAmount" class="form-label fw-bold">Net Amount :
+                                                <span class="text-danger">*</span></label>
+                                        </span>
+                                        <span class="input-group-text static-name">
+                                            <label for="textNetAmount" class="form-label">Rs.</label>
+                                        </span>
+                                        <input type="text" class="form-control input-area" id="textNetAmount"
+                                            placeholder="Enter Net Amount" required data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" data-bs-title="Enter Net Amount" disabled
+                                               onkeyup="textElementValidator(this,'^(([1-9][0-9]{0,7})||([1-9][0-9]{0,6}[.][0-9]{2}))$','grn','netamount')">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <!-- buttons -->
+                        <div class="row">
+                            <div class="col-6"></div>
+                            <div class="col-6 text-end">
+                                <button class="btn fw-bold form-btn button-clear" id="buttonClear" type="button">
+                                    <i class="fa-solid fa-recycle" style="color: #a3a3a3;"></i>
+                                    Clear
+                                </button>
+                                <button class="btn fw-bold form-btn button-print" id="buttonPrint" type="button"
+                                onclick="printGRNRecord(window['editOb'])">
+                                    <i class="fa-solid fa-print" style="color: #006eff;"></i>
+                                    Print
+                                </button>
+                                <button class="btn fw-bold form-btn button-submit" id="buttonSubmit" type="submit"
+                                onclick="grnSubmitButton()">
+                                    <i class="fa-solid fa-floppy-disk" style="color: #00c86e;"></i>
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- table -->
+            <div class="tab-pane fade" id="receiveNoteTabPillTable" role="tabpanel"
+                aria-labelledby="receiveNoteTabPillTable" tabindex="0">
+                <div class="card m-1">
+                    <div class="card-header"></div>
+                    <div class="card-body">
+                        <table class="table table-bordered" id="tableGRN">
+                            <thead id="tableHeadReceiveNote" class="table-head text-center">
+                                <tr>
+                                    <th>#</th>
+                                    <th>GRN No</th>
+                                    <th>Supplier</th>
+                                    <th>Purchase Order Code</th>
+                                    <th>Invoice No</th>
+                                    <th>Received Date</th>
+                                    <th>Total Books</th>
+                                    <th>Total Amount</th>
+                                    <th>Discount</th>
+                                    <th>Tax Amount</th>
+                                    <th>Net Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyReceiveNote" class="table-body text-center">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--modal grn View-->
+        <div class="modal" id="modalGRNView" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>View Good Receive Note</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card" id="divCardPrintGRN">
+                            <div class="card-header">
+                                <h1>GRN details</h1>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover table-striped table-bordered ">
+                                    <tr>
+                                        <th>GRN No</th>
+                                        <td id="tdGRNNo"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Supplier</th>
+                                        <td id="tdSupplier"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Purchase Order Code</th>
+                                        <td id="tdPurchaseOrderCode"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Invoice No</th>
+                                        <td id="tdInvoiceNo"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Received Date</th>
+                                        <td id="tdReceivedDate"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td id="tdStatus"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Books</th>
+                                        <td id="tdTotalBooks"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Amount</th>
+                                        <td id="tdTotalAmount"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Discount</th>
+                                        <td id="tdDiscount"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tax Amount</th>
+                                        <td id="tdTaxAmount"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Net Amount</th>
+                                        <td id="tdNetAmount"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Note</th>
+                                        <td id="tdnote"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align: center; font-weight: bold;">
+                                            Received Book List
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"  id="tdReceivedBookList"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer text-end">
+                        <button type="button" class="btn" onclick="printGRN()">Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div th:replace="~{footerfragment::bottomFragment}"></div>
+    <!-- link borrow js -->
+    <script src="controljs/grn.js"></script>
+</body>
+
+</html>

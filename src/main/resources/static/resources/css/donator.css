@@ -1,0 +1,95 @@
+#donatorFormPill {
+    border: 1px solid rgba(96, 165, 250, 0.8);
+    box-shadow: 1px 1px 1px rgba(96, 165, 250, 0.7), -1px -1px 1px rgba(96, 165, 250, 0.7);
+    border-radius: 5px;
+}
+
+#donatorTablePill {
+    border: 1px solid rgba(96, 165, 250, 0.8);
+    box-shadow: 1px 1px 1px rgba(96, 165, 250, 0.7), -1px -1px 1px rgba(96, 165, 250, 0.7);
+    border-radius: 5px;
+}
+
+#donatorFormPill.active {
+    /* background: linear-gradient(to right, rgb(234, 201, 255), rgb(180, 201, 255)); */
+    background-color: rgb(214, 235, 255);
+
+}
+
+#donatorTablePill.active {
+    /* background: linear-gradient(to right, rgb(236, 208, 253), rgb(180, 201, 255)); */
+    background-color: rgb(214, 235, 255);
+}
+
+#donatorFormPill:hover {
+    background-color: rgb(214, 235, 255);
+}
+
+#donatorTablePill:hover {
+    background-color: rgb(214, 235, 255);
+}
+.book-transfer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.book-transfer-container button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+#btnAddNewBookInDonator{
+    width: 150px;
+    height: 30px;
+    background-color: rgb(44, 82, 130);
+    color: white;
+}
+
+.book-transfer-container button:hover {
+
+    background-color: rgb(44, 82, 130);
+    color: white;
+
+}
+
+.list-box {
+    width: 450px;
+    height: 200px;
+    background-color: rgba(44, 82, 130, 0.2);
+    padding: 5px;
+    color:rgb(44, 82, 130); ;
+}
+.list-box option{
+    font-size: large;
+    margin-left: 5px;
+    margin-bottom: 4px;
+    padding: 3px;
+    padding-left: 10px;
+    border-radius: 4px;
+}
+#collapseDonationFormClick{
+    width: 400px;
+    background-color: rgb(44, 82, 130);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    
+}
+#btnAddNewBook {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: rgb(44, 82, 130);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: 36px;
+}
+
+#btnAddNewBook:hover {
+    box-shadow: 1px 1px 1px rgb(96, 165, 250);
+}

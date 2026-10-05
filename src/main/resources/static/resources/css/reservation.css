@@ -1,0 +1,29 @@
+/* book reservation management */
+#bookReservationFormPill{
+    border: 1px solid rgba(96, 165, 250,0.8);
+     box-shadow: 1px 1px 1px rgba(96, 165, 250,0.7), -1px -1px 1px rgba(96, 165, 250,0.7);
+     border-radius: 5px;
+}
+#bookReservationTablePill{
+    border: 1px solid rgba(96, 165, 250,0.8);
+     box-shadow: 1px 1px 1px rgba(96, 165, 250,0.7), -1px -1px 1px rgba(96, 165, 250,0.7);
+     border-radius: 5px;
+}
+#bookReservationFormPill.active {
+    /* background: linear-gradient(to right, rgb(234, 201, 255), rgb(180, 201, 255)); */
+    background-color: rgb(214, 235, 255);
+
+}
+#bookReservationTablePill.active {
+    /* background: linear-gradient(to right, rgb(236, 208, 253), rgb(180, 201, 255)); */
+    background-color: rgb(214, 235, 255);
+}
+
+#bookReservationFormPill:hover {
+  background-color: rgb(214, 235, 255);
+}
+
+#bookReservationTablePill:hover {
+    background-color: rgb(214, 235, 255);
+}
+

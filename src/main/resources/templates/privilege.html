@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{headerfragment::headFragment}"></head>
+<head>
+
+  <!-- link privilege css -->
+  <link rel="stylesheet" href="/resources/css/privilege.css">
+</head>
+
+<body>
+
+
+  <div class="container-fluid">
+    <!-- link side bar -->
+    <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+    <!--title area-->
+    <div class="row mt-2 title-row">
+      <div class="div-title p-1 text-center">
+        <div class="d-flex align-items-center justify-content-center">
+          <img class="icon-img me-2" src="/resources/images/privilege.png" alt="">
+          <h3 class="fw-bold main-text">Privilege Management</h3>
+        </div>
+      </div>
+
+
+    </div>
+    <!--title area-->
+    <ul class="nav nav-pills" id="tabPills" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button data-bs-toggle="pill" data-bs-target="#privilegeTabPillForm"
+          class="nav-link text-light m-1 active pill-tab" id="privilegeFormPill" type="button"
+          aria-controls="privilegeTabPillForm" role="tab" aria-selected="true">
+          <h6 class="fw-bold tab-name">Privilege Form</h6>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button data-bs-toggle="pill" data-bs-target="#privilegeTabPillTable" class="nav-link text-light m-1 pill-tab"
+          id="privilegeTablePill" type="button" aria-controls="privilegeTabPillTable" role="tab" aria-selected="false">
+          <h6 class="fw-bold tab-name">Privilege Table</h6>
+        </button>
+      </li>
+    </ul>
+    <div class="tab-content" id="pillTabContent">
+      <!--form start-->
+      <div class="tab-pane fade show active" id="privilegeTabPillForm" role="tabpanel"
+        aria-labelledby="privilegeTabPillForm" tabindex="0">
+        <!--form start-->
+        <div class="card m-1">
+          <div class="card-body">
+            <!--form start-->
+            <form id="formPrivilage" onsubmit="return false" class="p-1">
+              <!-- required mark -->
+              <div class="row ">
+                <div class="col text-end fw-bold">
+                  <p class="required-fields">Required Fields <span class="text-danger">*</span></p>
+                </div>
+              </div>
+              <!--Role and module start-->
+              <div class="row ">
+                <div class="col-6">
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <label for="selectRole" class="form-label fw-bold">
+                        Role : <span class="text-danger">*</span>
+                      </label>
+                    </span>
+                    <select id="selectRole" class="form-select input-area" required onchange="this.style.borderBottom='2px solid lightgreen';
+                        privilege.role_id=JSON.parse(this.value);" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      data-bs-title="Select Role">
+                    </select>
+                  </div>
+
+
+                </div>
+                <div class="col-6">
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <label for="selectModule" class="form-label fw-bold">
+                        Module : <span class="text-danger">*</span>
+                      </label>
+                    </span>
+                    <select id="selectModule" class="form-select input-area" required onchange="this.style.borderBottom='2px solid lightgreen';
+                        privilege.module_id=JSON.parse(this.value);" data-bs-toggle="tooltip"
+                      data-bs-placement="bottom" data-bs-title="Select Module">
+                      <option selected disabled value="Select Module">
+                        Select Module
+                      </option>
+
+                    </select>
+                  </div>
+
+
+                </div>
+              </div>
+              <!--Role and module end-->
+
+              <div class="row mt-3">
+                <!-- select -->
+                <div class="col-3">
+                  <!--select start-->
+
+                  <label for="selectPrivilege" class="form-label fw-bold checkbox-radio-label">
+                    Select : <span class="text-danger">*</span>
+                  </label>
+                  <div class="form-check">
+                    <input onchange="privilege.privi_select=true;" type="radio" id="selectPrivilege" name="privi_select"
+                      value="Active" class="form-check-input input-radio" required data-bs-toggle="tooltip"
+                      data-bs-placement="bottom" data-bs-title="Select an option for Select Privilege" />
+                    <label for="selectPrivilege" class="from-check-label checkbox-radio-label">Granted</label>
+                  </div>
+                  <div class="form-check">
+                    <input onchange="privilege.privi_select=false;" type="radio" id="radioNotActiveSelect"
+                      name="privi_select" value="Not Active" class="form-check-input input-radio" required />
+                    <label for="radioNotActiveSelect" class="from-check-label checkbox-radio-label">Not-Granted</label>
+                  </div>
+
+                  <!--select end-->
+                </div>
+                <!-- insert -->
+                <div class="col-3">
+                  <!--insert start-->
+
+                  <label for="insertPrivilege" class="form-label fw-bold checkbox-radio-label">
+                    Insert : <span class="text-danger">*</span>
+                  </label>
+                  <div class="form-check">
+                    <input onchange="privilege.privi_insert=true;" type="radio" id="insertPrivilege" name="privi_insert"
+                      value="Active" class="form-check-input input-radio" required data-bs-toggle="tooltip"
+                      data-bs-placement="bottom" data-bs-title="Select an option for Insert Privilege" />
+                    <label for="insertPrivilege" class="from-check-label checkbox-radio-label">Granted</label>
+                  </div>
+                  <div class="form-check">
+                    <input onchange="privilege.privi_insert=false;" type="radio" id="radioNotActiveInsert"
+                      name="privi_insert" value="Not Active" class="form-check-input input-radio" required />
+                    <label for="radioNotActiveInsert" class="from-check-label checkbox-radio-label">Not-Granted</label>
+                  </div>
+
+                  <!--insert end-->
+                </div>
+                <!-- update -->
+                <div class="col-3">
+                  <!--Update start-->
+
+                  <label for="updatePrivilege" class="form-label fw-bold checkbox-radio-label">
+                    Update : <span class="text-danger">*</span>
+                  </label>
+                  <div class="form-check">
+                    <input onchange="privilege.privi_update=true;" type="radio" id="updatePrivilege" name="privi_update"
+                      value="Active" class="form-check-input input-radio" required data-bs-toggle="tooltip"
+                      data-bs-placement="bottom" data-bs-title="Select an option for Update Privilege" />
+                    <label for="updatePrivilege" class="from-check-label checkbox-radio-label">Granted</label>
+                  </div>
+                  <div class="form-check">
+                    <input onchange="privilege.privi_update=false;" type="radio" id="radioNotActiveUpdate"
+                      name="privi_update" value="Not Active" class="form-check-input input-radio" required />
+                    <label for="radioNotActiveUpdate" class="from-check-label checkbox-radio-label">Not-Granted</label>
+                  </div>
+
+                  <!--Update end-->
+                </div>
+                <!-- delete -->
+                <div class="col-3">
+                  <!--delete start-->
+
+                  <label for="deletePrivilege" class="form-label fw-bold checkbox-radio-label">
+                    Delete : <span class="text-danger">*</span>
+                  </label>
+                  <div class="form-check">
+                    <input onchange="privilege.privi_delete=true;" type="radio" id="deletePrivilege" name="privi_delete"
+                      value="Active" class="form-check-input input-radio" required data-bs-toggle="tooltip"
+                      data-bs-placement="bottom" data-bs-title="Select an option for Delete Privilege" />
+                    <label id="activeDelete" for="deletePrivilege" class="from-check-label checkbox-radio-label">Granted</label>
+                  </div>
+                  <div class="form-check">
+                    <input onchange="privilege.privi_delete=false;" type="radio" id="radioNotActiveDelete"
+                      name="privi_delete" value="Not Active" class="form-check-input input-radio" required />
+                    <label id="notactiveDelete" for="radioNotActiveDelete" class="from-check-label checkbox-radio-label">Not-Granted</label>
+                  </div>
+
+
+                  <!--delete end-->
+
+                </div>
+              </div>
+              <!--button start-->
+              <div class="row mt-3">
+                <div class="col-6">
+
+                </div>
+
+                <div class="col-6 text-end">
+                    <button class="btn fw-bold form-btn button-clear" id="buttonClear" type="button">
+                        <i class="fa-solid fa-recycle" style="color: #a3a3a3;"></i>
+                        Clear
+                    </button>
+
+
+                    <button class="btn fw-bold form-btn button-print" id="buttonPrint" type="button"
+                            onclick="printPrivilegeRecord(window['editOb']);">
+                        <i class="fa-solid fa-print" style="color: #006eff;"></i>
+                        Print
+                    </button>
+
+
+                    <button class="btn fw-bold form-btn button-delete" id="buttonDelete" type="button"
+                            onclick="deletePrivilegeRecord(window['editOb']);">
+                        <i class="fa-solid fa-trash" style="color: #fa0000;"></i>
+                        Delete
+                    </button>
+
+                  <button class="btn fw-bold form-btn button-update" id="buttonUpdate" type="submit"
+                    onclick="buttonPrivilegeUpdate();">
+                    <i class="fa-solid fa-pen-to-square" style="color: #ffa600;"></i>
+                    Update
+                  </button>
+
+
+                  <button class="btn fw-bold form-btn button-submit" id="buttonSubmit" type="submit"
+                    onclick="buttonPrivilegeSubmit()">
+                    <i class="fa-solid fa-floppy-disk" style="color: #00c86e;"></i>
+                    Submit
+                  </button>
+
+                </div>
+              </div>
+              <!--button end-->
+            </form>
+            <!--form end-->
+          </div>
+        </div>
+        <!--form end-->
+      </div>
+      <!--form end-->
+
+    </div>
+    <div class="tab-content">
+      <!--table start-->
+      <div class="tab-pane fade" id="privilegeTabPillTable" role="tabpanel" aria-labelledby="privilegeTabPillTable"
+        tabindex="0">
+        <div class="card m-1">
+          <div class="card-header">
+            <div class="row m-1">
+              <div class="col-9"></div>
+
+              <div class="col-1 text-end">
+                <div class="d-flex align-items-center">
+                  <i class="fa-solid fa-circle-check fa-lg me-1 " style="color:rgb(0, 189, 72);"></i>
+                  <span>Granted</span>
+                </div>
+              </div>
+              <div class="col-2 text-end">
+                <div class="d-flex align-items-center">
+                  <i class="fa-solid fa-circle-xmark fa-lg me-1 " style="color: #ff0000;"></i>
+                  <span>Not-Granted</span>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+          <div class="card-body">
+            <table id="tablePrivilege" class="table table-bordered">
+              <thead id="tableHeadPrivilege" class="table-head text-center">
+                <tr>
+                  <th>#</th>
+                  <th>Role</th>
+                  <th>Module</th>
+                  <th>Select</th>
+                  <th>Insert</th>
+                  <th>Update</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody id="tableBodyPrivilege" class="table-body text-center">
+                <tr>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!--table end-->
+    </div>
+  </div>
+  <!--modal employee View-->
+  <div class="modal" id="modalPrivilegeView" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>View Privileges</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="card" id="divCardPrintPrivilege">
+            <div class="card-header">
+              <h1>Privilage Details</h1>
+            </div>
+            <div class="card-body">
+              <table class="table table-hover table-striped table-bordered ">
+                <tr>
+                  <th>Role</th>
+                  <td id="tdRole"></td>
+                </tr>
+                <tr>
+                  <th>Module</th>
+                  <td id="tdModule"></td>
+                </tr>
+                <tr>
+                  <th>Select Privilege</th>
+                  <td id="tdSelect"></td>
+                </tr>
+                <tr>
+                  <th>Insert Privilege</th>
+                  <td id="tdInsert"></td>
+                </tr>
+                <tr>
+                  <th>Update Privilege</th>
+                  <td id="tdUpdate"></td>
+                </tr>
+                <tr>
+                  <th>Delete Privilege</th>
+                  <td id="tdDelete"></td>
+                </tr>
+
+              </table>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer text-end">
+          <button type="button" class="btn" onclick="printPrivilege()">Print</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--modal Employee view-->
+  <div th:replace="~{footerfragment::bottomFragment}"></div>
+  <!-- link privilege js -->
+  <script src="controljs/privilege.js"></script>
+</body>
+
+</html>

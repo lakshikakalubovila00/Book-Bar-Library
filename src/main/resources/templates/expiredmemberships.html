@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{headerfragment::headFragment}"></head>
+
+<body>
+<div class="container-fluid">
+    <!-- link side bar -->
+    <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+    <!-- title area -->
+    <div class="row mt-2 title-row">
+        <div class="div-title p-1 text-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <img class="icon-img me-2" src="/resources/images/expired.png" alt="">
+                <h3 class="fw-bold main-text">Expired Memberships</h3>
+            </div>
+        </div>
+    </div>
+    <!-- table -->
+    <div class="card m-1">
+        <div class="card-body">
+            <table class=" table  table-bordered" id="tableExpiredMemberships">
+                <thead id="tableHeadExpiredMemberships" class="table-head text-center">
+                <tr>
+                    <th>#</th>
+                    <th>Membership No</th>
+                    <th>Member</th>
+                    <th>Membership Type</th>
+                    <th>Membership Category</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Set as Expired</th>
+                </tr>
+                </thead>
+                <tbody id="tableBodyExpiredMemberships" class="table-body text-center">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- title area - marked as expired -->
+    <div class="row mt-2">
+        <div class=" p-1 text-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <h3 class="fw-bold normal-text">Memberships Marked As Expired</h3>
+            </div>
+        </div>
+    </div>
+    <!-- table -->
+    <table class=" table  table-bordered" id="tableMarkedAsExpiredMemberships">
+                <thead id="tableHeadMarkedAsExpiredMemberships" class="table-head text-center">
+                <tr>
+                    <th>#</th>
+                    <th>Membership No</th>
+                    <th>Member</th>
+                    <th>Membership Type</th>
+                    <th>Membership Category</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody id="tableBodyMarkedAsExpiredMemberships" class="table-body text-center">
+                </tbody>
+            </table>
+</div>
+<div th:replace="~{footerfragment::bottomFragment}"></div>
+<script src="controljs/expiredmemberships.js"></script>
+</body>
+
+</html>

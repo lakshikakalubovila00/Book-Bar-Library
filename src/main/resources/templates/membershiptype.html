@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{headerfragment::headFragment}"></head>
+<head>
+    <!-- link membershipdetails css -->
+    <link rel="stylesheet" href="/resources/css/membershiptype.css">
+</head>
+
+<body>
+<div class="container-fluid">
+    <!-- link side bar -->
+    <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+    <!-- title area -->
+    <div class="row mt-2 title-row">
+
+        <div class="div-title p-1 text-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <img class="icon-img me-2" src="/resources/images/membership.png" alt="">
+                <h3 class="fw-bold main-text">Membership Type Management</h3>
+            </div>
+        </div>
+    </div>
+    <!-- tab-pills -->
+    <ul class="nav nav-pills" id="tabPills" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button data-bs-toggle="pill" data-bs-target="#membershipTypeTabPillForm"
+                    class="nav-link m-1 fw-bold active pill-tab" id="membershipTypeFormPill" type="button"
+                    aria-controls="membershipTypeTabPillForm" role="tab" aria-selected="true">
+                <h6 class="fw-bold tab-name">Membership Type Form</h6>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button data-bs-toggle="pill" data-bs-target="#membershipTypeTabPillTable" class="nav-link m-1"
+                    id="membershipTypeTablePill" type="button" aria-controls="membershipTypeTabPillForm"
+                    role="tab" aria-selected="false">
+                <h6 class="fw-bold tab-name">Membership Type Table</h6>
+            </button>
+        </li>
+    </ul>
+    <div class="tab-content" id="pillsTabContent">
+        <!-- form -->
+        <div class="tab-pane fade show active" id="membershipTypeTabPillForm" role="tabpanel"
+             aria-labelledby="membershipTypeTabPillForm" tabindex="0">
+            <div class="card m-1">
+                <div class="card-body">
+                    <form onsubmit="return false" id="membershipTypeForm" class="p-1">
+                        <!-- required mark -->
+                        <div class="row">
+                            <div class="col text-end fw-bold">
+                                <p class="required-fields">Required Fields <span class="text-danger">*</span></p>
+                            </div>
+                        </div>
+                        <!-- membershup type category, year -->
+                        <div class="row">
+
+                            <!--                                membership type category select-->
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="selectMembershipTypeCategory" class="form-label fw-bold">Membership Type Category :
+                                                <span class="text-danger">*</span></label>
+                                        </span>
+                                    <select name="" id="selectMembershipTypeCategory" class="form-select"
+                                            onchange="this.style.borderBottom='2px solid lightgreen';
+                                            membershiptype.membershiptypecategory_id=JSON.parse(this.value);
+                                                fillDuration(); generateName()"
+                                            required data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" data-bs-title="Select Membership Type Category">
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <!-- Year -->
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <label for="radioMembershipTypeYear" class="form-label fw-bold checkbox-radio-label">Year : <span
+                                            class="text-danger">*</span></label>
+                                    <div id="radioMembershipTypeYear" class="form-check d-flex gap-3 align-items-center"></div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                        <div class="row mt-3">
+                            <!--name-- auto generate-->
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textName" class="form-label fw-bold">Name : <span
+                                                    class="text-danger">*</span></label>
+                                        </span>
+                                    <input type="text" class="form-control input-area" id="textName"
+                                           onkeyup="textElementValidator(
+                                                this,
+                                                '^([A-Z][a-z]{2,15}[ ])+([A-Z][a-z]{2,20})$',
+                                                'membershiptype',
+                                                'name')"
+                                           placeholder="Enter Name" required data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom" data-bs-title="Enter Name">
+                                </div>
+                            </div>
+
+                            <!-- duration -->
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="numberDuration" class="form-label fw-bold">Duration : <span
+                                                    class="text-danger">*</span></label>
+                                        </span>
+                                    <input type="number" class="form-control input-area" id="numberDuration"
+                                           onkeyup="
+                                            textElementValidator(this,'^([1-9][0-9]{0,3})$','membershiptype','membershipduration')"
+                                           placeholder="Enter Duration" required data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom" data-bs-title="Enter Duration">
+                                    <span class="input-group-text static-name">
+                                            <label for="numberDuration" class="form-label">days</label>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+
+                            <!-- membership fee -->
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="numberMembershipFee" class="form-label fw-bold">Membership Fee :
+                                                <span class="text-danger">*</span></label>
+                                        </span>
+                                    <span class="input-group-text static-name">
+                                            <label for="numberMembershipFee" class="form-label">Rs.</label>
+                                        </span>
+                                    <input type="number" class="form-control input-area" id="numberMembershipFee"
+                                           onkeyup="
+                                            textElementValidator(this,'^([1-9][0-9]{1,4})$','membershiptype','membershipfee')"
+                                           placeholder="Enter Membership Fee" required data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom" data-bs-title="Enter Membership Fee">
+
+                                </div>
+                            </div>
+                            <!-- Renewal fee -->
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="numberRenewalFee" class="form-label fw-bold">Renewal Fee :
+                                                <span class="text-danger">*</span></label>
+                                        </span>
+                                    <span class="input-group-text static-name">
+                                            <label for="numberRenewalFee" class="form-label">Rs.</label>
+                                        </span>
+                                    <input type="number" class="form-control input-area" id="numberRenewalFee"
+                                           onkeyup="
+                                            textElementValidator(this,'^([1-9][0-9]{1,4})$','membershiptype','renewalfee')"
+                                           placeholder="Enter Renewal Fee" required data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom" data-bs-title="Enter Renewal Fee">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- borrow duration, borrow limit -->
+                        <div class="row mt-3">
+                            <!-- borrow duration -->
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="numberBorrowDuration" class="form-label fw-bold">Borrow Duration
+                                                : <span class="text-danger">*</span></label>
+                                        </span>
+                                    <input type="number" class="form-control input-area" id="numberBorrowDuration"
+                                           onkeyup="
+                                            textElementValidator(this,'^([0-9]{1,2})$','membershiptype','borrowduration')"
+                                           placeholder="Enter Borrow Duration" required data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom" data-bs-title="Enter Borrow Duration">
+                                    <span class="input-group-text static-name">
+                                            <label for="numberBorrowDuration" class="form-label">days</label>
+                                        </span>
+                                </div>
+                            </div>
+                            <!-- borrow limit -->
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="numberBorrowLimit" class="form-label fw-bold">Borrow Limit :
+                                                <span class="text-danger">*</span></label>
+                                        </span>
+                                    <input type="number" class="form-control input-area" id="numberBorrowLimit"
+                                           onkeyup="
+                                            textElementValidator(this,'^([0-9])$','membershiptype','borrowlimit')"
+                                           placeholder="Enter Borrow Limit" required data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom" data-bs-title="Enter Borrow Limit">
+                                    <span class="input-group-text static-name">
+                                            <label for="numberBorrowLimit" class="form-label">books</label>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- reservation duration, reservation limit -->
+                        <div class="row mt-3">
+                            <!-- reservation duration -->
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="numberReservationDuration"
+                                                   class="form-label fw-bold">Reservation Duration : <span
+                                                    class="text-danger">*</span></label>
+                                        </span>
+                                    <input type="number" class="form-control input-area"
+                                           onkeyup="
+                                            textElementValidator(this,'^([0-9]{1,2})$','membershiptype','reservationduration')"
+                                           id="numberReservationDuration" placeholder="Enter Reservation Duration"
+                                           required data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                           data-bs-title="Enter Reservation Duration">
+                                    <span class="input-group-text static-name">
+                                            <label for="numberReservationDuration" class="form-label">days</label>
+                                        </span>
+                                </div>
+                            </div>
+                            <!-- reservation limit -->
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="numberReservationLimit" class="form-label fw-bold">Reservation
+                                                Limit : <span class="text-danger">*</span></label>
+                                        </span>
+                                    <input type="number" class="form-control input-area" id="numberReservationLimit"
+                                           onkeyup="
+                                            textElementValidator(this,'^([0-9])$','membershiptype','reservationlimit')"
+                                           placeholder="Enter Reservation Limit" required data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom" data-bs-title="Enter Reservation Limit">
+                                    <span class="input-group-text static-name">
+                                            <label for="numberReservationLimit" class="form-label">books</label>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- reservation fee,delay fine fee -->
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="numberReservationFee" class="form-label fw-bold">Reservation Fee :
+                                            <span class="text-danger">*</span></label>
+                                        </span>
+                                    <span class="input-group-text static-name">
+                                            <label for="numberReservationFee" class="form-label">Rs.</label>
+                                        </span>
+                                    <input type="number" class="form-control input-area" id="numberReservationFee"
+                                           onkeyup="textElementValidator(this,'^([1-9][0-9]{1,4})$','membershiptype','reservationfee')"
+                                           placeholder="Enter Reservation Fee" required data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom" data-bs-title="Enter Reservation Fee">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="numberDelayFineFee" class="form-label fw-bold">Delay Fine Fee :
+                                                <span class="text-danger">*</span></label>
+                                        </span>
+                                    <span class="input-group-text static-name">
+                                            <label for="numberDelayFineFee" class="form-label">Rs.</label>
+                                        </span>
+                                    <input type="number" class="form-control input-area" id="numberDelayFineFee"
+                                           onkeyup="
+                                            textElementValidator(this,'^([1-9][0-9]{0,2})$','membershiptype','fineprice')"
+                                           placeholder="Enter Delay Fine Fee" required data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom" data-bs-title="Enter Delay Fine Fee">
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!--status ,description -->
+                        <div class="row mt-3">
+                            <!-- status -->
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="selectStatus" class="form-label fw-bold">Status :
+                                                <span class="text-danger">*</span></label>
+                                        </span>
+                                    <select name="" id="selectStatus" class="form-select"
+                                            onchange="this.style.borderBottom='2px solid lightgreen';
+                                            membershiptype.membershiptypestatus_id=JSON.parse(this.value);"
+                                            required data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" data-bs-title="Select Status">
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                        <span class="input-group-text">
+                                            <label for="textDescription" class="form-label fw-bold">Description :
+                                            </label>
+                                        </span>
+                                    <textarea  id="textDescription" class="form-control input-area"
+                                               onkeyup="textElementValidator(
+                                         this,
+                                         '^([A-Za-z0-9\\.\\-\\/\\s\\,]{2,15})+$',
+                                         'membershiptype',
+                                         'description'
+                                        );"
+                                               placeholder="Enter Description" data-bs-toggle="tooltip"
+                                               data-bs-placement="bottom" data-bs-title="Enter Description"></textarea>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- buttons -->
+                        <div class="row mt-3">
+                            <div class="col-6">
+
+                            </div>
+
+                            <div class="col-6 text-end">
+                                <button class="btn fw-bold form-btn button-clear" id="buttonClear" type="button">
+                                    <i class="fa-solid fa-recycle" style="color: #a3a3a3;"></i>
+                                    Clear
+                                </button>
+
+
+                                <button class="btn fw-bold form-btn button-print" id="buttonPrint" type="button"
+                                        onclick="printmembershipTypeRecord(window['editOb'])">
+                                    <i class="fa-solid fa-print" style="color: #006eff;"></i>
+                                    Print
+                                </button>
+
+
+                                <button class="btn fw-bold form-btn button-delete " id="buttonDelete" type="button"
+                                        onclick="deleteMembershipTypeRecord(window['editOb'])">
+                                    <i class="fa-solid fa-trash" style="color: #fa0000;"></i>
+                                    Delete
+                                </button>
+
+                                <button class="btn fw-bold form-btn button-update" id="buttonUpdate" type="submit"
+                                        onclick="buttonMembershipTypeUpdate()">
+                                    <i class="fa-solid fa-pen-to-square" style="color: #ffa600;"></i>
+                                    Update
+                                </button>
+
+
+                                <button class="btn fw-bold form-btn button-submit" id="buttonSubmit" type="submit"
+                                        onclick="buttonMembershipTypeSubmit()">
+                                    <i class="fa-solid fa-floppy-disk" style="color: #00c86e;"></i>
+                                    Submit
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- table -->
+        <div class="tab-pane fade" id="membershipTypeTabPillTable" role="tabpanel"
+             aria-labelledby="membershipTypeTabPillTable" tabindex="0">
+            <div class="card m-1">
+                <div class="card-header">
+                    <div class="row m-1">
+                        <div class="col-9"></div>
+
+                        <div class="col-1 text-end">
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-circle-check fa-lg me-1 " style="color:rgb(0, 189, 72);"></i>
+                                <span>Valid</span>
+                            </div>
+                        </div>
+                        <div class="col-1 text-end">
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-circle-xmark fa-lg me-1 " style="color: #ff0000;"></i>
+                                <span>Invalid</span>
+                            </div>
+                        </div>
+                        <div class="col-1 text-end">
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-trash fa-lg me-1" style="color: rgb(255, 0, 0);"></i>
+                                <span>Deleted</span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered" id="tableMembershipTypes">
+                        <thead id="tableHeadMembershipType" class="table-head text-center">
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Duration</th>
+                            <th>Membership Fee</th>
+                            <th>Renewal Fee</th>
+                            <th>Borrow Duration</th>
+                            <th>Borrow Limit</th>
+                            <th>Reservation Duration</th>
+                            <th>Reservation Limit</th>
+                            <th>Reservation Fee</th>
+                            <th>Delay Fine Fee</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableBodyMembershipType" class="table-body text-center">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--    modal membership type view-->
+
+<div class="modal" id="modalMembershipTypeView" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>View Book</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card" id="divCardPrintMembershipType">
+                    <div class="card-header">
+                        <h1>Membership Type Details</h1>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover table-striped table-bordered ">
+                            <tr>
+                                <th>Name</th>
+                                <td id="tdName"></td>
+                            </tr>
+                            <tr>
+                                <th>Duration</th>
+                                <td id="tdDuration"></td>
+                            </tr>
+                            <tr>
+                                <th>Membership Fee</th>
+                                <td id="tdMembershipFee"></td>
+                            </tr>
+                            <tr>
+                                <th>Renewal Fee</th>
+                                <td id="tdRenewalFee"></td>
+                            </tr>
+                            <tr>
+                                <th>Borrow Duration</th>
+                                <td id="tdBorrowDuration"></td>
+                            </tr>
+                            <tr>
+                                <th>Borrow Limit</th>
+                                <td id="tdBorrowLimit"></td>
+                            </tr>
+                            <tr>
+                                <th>Reservation Duration</th>
+                                <td id="tdReservationDuration"></td>
+                            </tr>
+                            <tr>
+                                <th>Reservation Limit</th>
+                                <td id="tdReservationLimit"></td>
+                            </tr>
+                            <tr>
+                                <th>Reservation Fee</th>
+                                <td id="tdReservationFee"></td>
+                            </tr>
+                            <tr>
+                                <th>Delay Fine Fee</th>
+                                <td id="tdDelayfineFee"></td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td id="tdStatus"></td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td id="tdDescription"></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer text-end">
+                <button type="button" class="btn" onclick="printMembershipType()">Print</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{footerfragment::bottomFragment}"></div>
+<!-- link membershipdetails js -->
+<script src="controljs/membershiptype.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{headerfragment::headFragment}"></head>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="resources/css/dashboard.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+    <!-- htmlfile, fragment -->
+    <nav th:replace="~{sidebar::sidebarFragment}"></nav>
+
+    <!-- welcome text -->
+    <div class="row mt-4  ms-2 me-2 welcome-text text-center">
+        <div class="col">
+            <!-- welcome text with username -->
+            <span class="fw-bold" style="font-size: x-large">Welcome, </span><span style="font-size: x-large" class="fw-bold" th:text="${loggedusername}">Username </span><span style="font-size: x-large" class="fw-bold">!</span>
+        </div>
+    </div>
+
+    <!-- Quick Access for Librarian -->
+    <div class=" d-flex justify-content-center gap-3 flex-wrap mt-3" id="quickAccessForLibrarian">
+        <!-- Register Member -->
+            <button  class="quick-access-button" id="registerMemberAccess" onclick="window.location.href='/memberregistration'">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-3">
+                        <img  class="icon-img me-2 ms-2" src="/resources/images/memberregistration.png">
+                    </div>
+                    <div class="col-9">
+                        <h6 class="fw-bold mt-2">Register Member</h6>
+                    </div>
+                </div>
+            </button>
+        <!-- Add Book -->
+            <button class="quick-access-button" id="addBookAccess" onclick="window.location.href='/book'">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-3">
+                        <img  class="icon-img me-2 ms-2" src="/resources/images/Book.png">
+                    </div>
+                    <div class="col-9">
+                        <h6 class="fw-bold mt-2">Add Book</h6>
+                    </div>
+                </div>
+            </button>
+        <!-- Check Pending Reservations -->
+            <button class="quick-access-button" id="pendingReservationsAccess" onclick="window.location.href='/pendingreservations'">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-3">
+                        <img  class="icon-img me-2 ms-2" src="/resources/images/pending.png">
+                    </div>
+                    <div class="col-9">
+                        <h6 class="fw-bold mt-2">Check Pending Reservations</h6>
+                    </div>
+                </div>
+            </button>
+        <!-- check overdue Borrowings -->
+            <button class="quick-access-button" id="checkOverdueBorrowingsAccess" onclick="window.location.href='/overdueborrowings'">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-3">
+                        <img  class="icon-img me-2 ms-2" src="/resources/images/overdueicon.png">
+                    </div>
+                    <div class="col-9">
+                        <h6 class="fw-bold mt-2">Check Overdue Borrowings</h6>
+                    </div>
+                </div>
+            </button>
+        <!-- check expired reservations -->
+            <button class="quick-access-button" id="checkExpiredReservationsAccess" onclick="window.location.href='/expiredreservations'">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-3">
+                        <img  class="icon-img me-2 ms-2" src="/resources/images/overdueicon.png">
+                    </div>
+                    <div class="col-9">
+                        <h6 class="fw-bold mt-2">Check Expired Reservations</h6>
+                    </div>
+                </div>
+            </button>
+        <!-- check expired memberships -->
+            <button class="quick-access-button" id="checkExpiredMembershipsAccess" onclick="window.location.href='/expiredmemberships'">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-3">
+                    <img  class="icon-img me-2 ms-2" src="/resources/images/expired.png">
+                </div>
+                <div class="col-9">
+                    <h6 class="fw-bold mt-2">Check Expired Memberships</h6>
+                </div>
+            </div>
+        </button>
+    </div>
+
+    <!-- Quick Access for Library - Assistant -->
+    <div class=" d-flex justify-content-center gap-3 flex-wrap mt-3" id="quickAccessForLibraryAssistant">
+        <!-- OPAC -->
+            <button class="quick-access-button" id="opacAccess" onclick="window.location.href='/opac'">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-3">
+                        <img  class="icon-img me-2 ms-2" src="/resources/images/search.png">
+                    </div>
+                    <div class="col-9">
+                        <h6 class="fw-bold mt-2">OPAC</h6>
+                    </div>
+                </div>
+            </button>
+        <!-- Add reservation -->
+            <button class="quick-access-button" id="addReservationAccess" onclick="window.location.href='/reservation'">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-3">
+                        <img  class="icon-img me-2 ms-2" src="/resources/images/reserved.png">
+                    </div>
+                    <div class="col-9">
+                        <h6 class="fw-bold mt-2">Reservation</h6>
+                    </div>
+                </div>
+            </button>
+        <!-- Borrow Book -->
+            <button class="quick-access-button" id="borrowBookAccess" onclick="window.location.href='/borrow'">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-3">
+                        <img  class="icon-img me-2 ms-2" src="/resources/images/borrow.png">
+                    </div>
+                    <div class="col-9">
+                        <h6 class="fw-bold mt-2">Borrowing</h6>
+                    </div>
+                </div>
+            </button>
+        <!-- Renew Book -->
+            <button class="quick-access-button" id="renewBookAccess" onclick="window.location.href='/renewal'">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-3">
+                        <img  class="icon-img me-2 ms-2" src="/resources/images/renew.png">
+                    </div>
+                    <div class="col-9">
+                        <h6 class="fw-bold mt-2">Renewal</h6>
+                    </div>
+                </div>
+            </button>
+        <!-- handover Book -->
+            <button class="quick-access-button" id="handoverBookAccess" onclick="window.location.href='/handoverandfine'">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-3">
+                        <img  class="icon-img me-2 ms-2" src="/resources/images/return.png">
+                    </div>
+                    <div class="col-9">
+                        <h6 class="fw-bold mt-2">Handover</h6>
+                    </div>
+                </div>
+            </button>
+        <!-- renew Membership -->
+            <button class="quick-access-button" id="renewMembershipAccess" onclick="window.location.href='/membershiprenewal'">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-3">
+                        <img  class="icon-img me-2 ms-2" src="/resources/images/membership.png">
+                    </div>
+                    <div class="col-9">
+                        <h6 class="fw-bold mt-2">Renew Membership</h6>
+                    </div>
+                </div>
+            </button>
+    </div>
+
+    <!-- count cards -->
+    <div class="row row-cols-5 mt-3  ms-2 me-2">
+        <!-- members -->
+        <div class="col d-flex flex-column align-items-center justify-content-center">
+            <div class="count-cards">
+                <div class="p-1 mt-2">
+                    <div class="d-flex align-items-center">
+                        <img class="icon-img me-2 ms-2" src="/resources/images/team.png" alt="">
+                        <h5 class="fw-bold">Members</h5>
+                    </div>
+                    <h6 class="text-center mt-2 number-count" id="membersCount"></h6>
+                </div>
+
+            </div>
+        </div>
+        <!-- books -->
+        <div class="col d-flex flex-column align-items-center justify-content-center">
+            <div class=" count-cards">
+                <div class="p-1 mt-2">
+                    <div class="d-flex align-items-center">
+                        <img class="icon-img me-2 ms-2" src="/resources/images/bookshelf.png" alt="">
+                        <h5 class="fw-bold">Books</h5>
+                    </div>
+                    <h6 class="text-center mt-2 number-count" id="booksCount"></h6>
+                </div>
+            </div>
+        </div>
+        <!-- borrowings -->
+        <div class="col d-flex flex-column align-items-center justify-content-center">
+            <div class=" count-cards">
+                <div class="p-1 mt-2">
+                    <div class="d-flex align-items-center">
+                        <img class="icon-img me-2 ms-2" src="/resources/images/borrow.png" alt="">
+                        <h5 class="fw-bold">Active Borrowings</h5>
+                    </div>
+                    <h6 class="text-center mt-2 number-count" id="borrowingsCount"></h6>
+                </div>
+
+            </div>
+        </div>
+        <!-- reservations -->
+        <div class="col d-flex flex-column align-items-center justify-content-center">
+            <div class=" count-cards">
+
+                <div class="p-1 mt-2">
+                    <div class="d-flex align-items-center">
+                        <img class="icon-img me-2 ms-2" src="/resources/images/reserved.png" alt="">
+                        <h5 class="fw-bold">Active Reservations</h5>
+                    </div>
+                    <h6 class="text-center mt-2 number-count" id="reservationsCount"></h6>
+                </div>
+
+            </div>
+        </div>
+        <!-- overdue books -->
+        <div class="col d-flex flex-column align-items-center justify-content-center">
+            <div class=" count-cards">
+
+                <div class="p-1 mt-2">
+                    <div class="d-flex align-items-center">
+                        <img class="icon-img me-2 ms-2" src="/resources/images/overdue.png" alt="">
+                        <h5 class="fw-bold">Overdue Books</h5>
+                    </div>
+                    <h6 class="text-center mt-2 number-count" id="overdueBooksCount"></h6>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- reports,  Popular Picks-->
+    <div class="row mt-3  ms-3 me-3">
+        <div class="col card-borrowings-report">
+            <div class="row mt-2">
+                <h5 class="fw-bold sub-text">Current Borrowings</h5>
+                <!-- table -->
+                <table class=" table  table-bordered current-borrowings-table" id="tableCurrentBorrowings">
+                    <thead id="tableHeadCurrentBorrowings" class="table-head text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Borrow Code</th>
+                        <th>Book</th>
+                        <th>Member</th>
+                        <th>Borrow Date</th>
+                        <th>Handover Due Date</th>
+                        <th>Renew Date</th>
+                        <th>Renew Handover Due Date</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tableBodyCurrentBorrowings" class="table-body text-center">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+<div th:replace="~{footerfragment::bottomFragment}"></div>
+<script src="/controljs/dashboard.js"></script>
+</body>
+
+</html>

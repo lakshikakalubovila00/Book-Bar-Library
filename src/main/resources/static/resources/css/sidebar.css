@@ -1,0 +1,83 @@
+* {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.fixed-top{
+    background-color: rgb(30, 58, 95);
+    height: 70px;
+}
+
+#toggleButton {
+    background-color: rgb(255, 255, 255);
+    padding: 0.3rem 0.4rem;
+    font-size: 0.7rem;
+    /* padding: 0.2rem 0.4rem; font-size: 0.8rem; 0.2-top bottom padding 0.4- right left padding font-size - scales down the size of elements inside the button  1rem=16 px */
+}
+
+#libraryName {
+    color: rgb(255, 255, 255);
+}
+.library-slogan{
+    font-size: small;
+    color: rgb(255, 255, 255);
+}
+
+.offcanvas{
+    background-color: rgb(30, 58, 95);
+    /* background:linear-gradient(to bottom, rgb(155, 148, 255), rgb(164, 211, 255)); */
+
+}
+
+.btn-close {
+    background-color: rgb(255, 255, 255);
+    height: 8px;
+    width: 8px;
+}
+
+.user-name {
+    color: rgb(255, 255, 255);
+}
+
+.user-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.sidebar-toggle,.direct-link {
+    background-color: rgb(255, 255, 255);
+    color: rgb(30, 58, 95);
+    border-radius: 5px;
+    padding-left: 20px;
+    height: 37px;
+}
+
+.dropdown-item-image {
+    width: 25px;
+    height: 25px;
+}
+
+.dropdown-menu {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.dropdown-item-name {
+    color: rgb(30, 58, 95);
+}
+
+.navbar-usr-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+}
+.navbar-user-dropdown{
+    color: rgb(255, 255, 255);
+}
+
+.bottom-icon{
+    color: rgb(255, 255, 255);
+}
+
+.bottom-text {
+    color: rgb(255, 255, 255);
+}
